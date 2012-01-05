@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Film OnLine</string>
+    <string name="app_desc">Indice di film completi in italiano su YouTube</string>
+    <string name="headerTitle">Tap: play | Tieni premuto: menu</string>
+    <string name="total">Film in elenco:</string>
+    <string name="share_subj">(Film On-Line)</string>
+    <string name="infoText_1">Questo è un indice di film completi in italiano disponibili su YouTube.\n\nTap sulla categoria per espanderla, tap sul titolo per avviare il film, pressione prolungata per visualizzare il menu.\n\n\n\n</string>
+    <string name="infoButtonMail">Mail</string>
+    <string name="subjectMail">Contatto da Film OnLine</string>
+    <string name="infoButtonWeb">Sito Web</string>
+    <string name="error">Nessun dato caricato.\nControllare che la connessione web sia funzionante.</string>
+    <string name="icon_desc">Film OnLine icon</string>
+    <string name="loadingTitle">Caricamento</string>
+    <string name="loading">Lettura della lista in corso.</string>
+    <string name="disclaimer">DISCLAIMER:\nFilm OnLine raccoglie link pubblici a contenuti presenti sul web.\n\nI filmati linkati nell\'applicazione sono ospitati su server YouTube e non sono controllati dagli sviluppatori, che declinano pertanto ogni responsabilità circa il loro contenuto.\n\nPer chiedere la rimozione dall\'elenco di un link, contattare lo staff tramite il tasto sottostante, grazie.</string>
+    <string name="brokenSubj">Film OnLine: segnalazione link non funzionante</string>
+    <string name="brokenText">Questo link non funziona: </string>
+    <string name="opt_info_text">Info e Disclaimer</string>
+    <string name="opt_rate_text">Vota sul market</string>
+    <string name="opt_contrib_text">Partecipa anche tu</string>
+    <string name="opt_disc_text">Disclaimer</string>
+    <string name="opt_premium_text">Versione \'Donate\'</string>
+    <string name="cm_wiki">Wikipedia</string>
+    <string name="cm_info">IMdb</string>
+    <string name="cm_play">Play</string>
+    <string name="cm_triler">Cerca Trailer</string>
+    <string name="cm_share">Condividi</string>
+    <string name="cm_broken">Segnala link non valido</string>
+    <string name="contribText">Film OnLine è un progetto open source: scoprite il codice sul repository e unitevi al team.\n\nOppure, se non siete sviluppatori, suggerite nuovi film, idee per migliorare e apporti di ogni genere con una mail.</string>
+    <string name="contribTitle">Partecipa</string>
+    <string name="contribBtnRep">Repository</string>
+</resources>
