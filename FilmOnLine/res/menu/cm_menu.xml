@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/cm_wiki"
+        android:title="@string/cm_wiki"/>
+    <item
+        android:id="@+id/cm_info"
+        android:title="@string/cm_info"/>
+    <item
+        android:id="@+id/cm_play"
+        android:title="@string/cm_play"/>
+    <item
+        android:id="@+id/cm_trailer"
+        android:title="@string/cm_triler"/>
+    <item
+        android:id="@+id/cm_share"
+        android:title="@string/cm_share"/>
+    <item
+        android:id="@+id/cm_broken"
+        android:title="@string/cm_broken"/>
+
+</menu>
