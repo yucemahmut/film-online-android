@@ -1,9 +1,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:id="@+id/mainLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/bg"
-    android:orientation="vertical"
-    android:id="@+id/mainLayout" >
+    android:orientation="vertical" >
+
+    <!-- AdMob START -->
+
+    <com.google.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="a14f0647dbdca27"
+        ads:loadAdOnCreate="true" />
+    <!-- AdMob STOP -->
+
 
     <!-- Header title START -->
 
@@ -13,14 +26,14 @@
         android:layout_height="wrap_content"
         android:background="@android:color/background_light"
         android:padding="5dip" >
- 
+
         <ImageView
             android:id="@+id/icon"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_marginRight="6dip"
-            android:src="@drawable/icon"
-            android:contentDescription="@string/icon_desc" />
+            android:contentDescription="@string/icon_desc"
+            android:src="@drawable/icon" />
 
         <LinearLayout
             android:layout_width="0dip"
