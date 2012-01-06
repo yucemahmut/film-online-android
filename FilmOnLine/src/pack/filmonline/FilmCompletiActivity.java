@@ -1,17 +1,22 @@
 package pack.filmonline; 
 
 import io.pen.bluepixel.filmonline.R;
+
 import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+
 import android.app.AlertDialog;
 import android.app.ExpandableListActivity;
 import android.app.ProgressDialog;
@@ -21,6 +26,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -31,6 +37,10 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
 
 public class FilmCompletiActivity extends ExpandableListActivity{ 
 
@@ -44,11 +54,14 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 	private List groupList, childrenList;
 	private List globalList = new ArrayList();
 	private int tot;
+	private AdView adView;
+	private static final String AD_UNIT_ID = "a14f0647dbdca27";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 		setContentView(R.layout.main);	
+	    
 		try{
 			//If the movie list has been already read, don't reload it.
 			groupList = (List) savedInstanceState.getSerializable("groupList");
@@ -111,6 +124,19 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 			System.out.println("Error: " + e.getMessage());
 		}
 		registerForContextMenu(getExpandableListView());
+	}
+	
+	private void buildAd(){
+		// Create the adView
+		Map<String, Object> extras = new HashMap<String, Object>();
+		extras.put("color_bg", "ffffff");
+		extras.put("color_bg_top", "eeeeee");
+		extras.put("color_border", "999999");
+		extras.put("color_link", "000000");
+		extras.put("color_text", "333333");
+		extras.put("color_url", "666666");
+	    adView = new AdView(this, AdSize.BANNER, AD_UNIT_ID);
+	    adView.loadAd(new AdRequest());
 	}
 
 	public int initialize(String urlXml) {
@@ -377,6 +403,8 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 				createGroupList();
 				createChildList();				
 			}
+			Looper.prepare();
+			buildAd();
 			return "COMPLETE!";
 		}
 
@@ -400,8 +428,15 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 		protected void onPostExecute( String result ) {
 			super.onPostExecute(result);
 			progDailog.dismiss();
-			buildList();
+			buildList();	
+			
 		}
-	}    
+	}
+	 @Override
+	  public void onDestroy() {
+	    if (adView != null)
+	    	adView.destroy();
+	    super.onDestroy();
+	  }
 }
 
