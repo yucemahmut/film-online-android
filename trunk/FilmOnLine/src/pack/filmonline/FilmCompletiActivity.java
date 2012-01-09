@@ -404,7 +404,7 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 				createChildList();				
 			}
 			Looper.prepare();
-			buildAd();
+			//buildAd();
 			return "COMPLETE!";
 		}
 
