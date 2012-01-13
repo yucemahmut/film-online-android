@@ -40,7 +40,7 @@
     <string name="opt_disc_text">Disclaimer</string>
     <string name="opt_premium_text">Versione \'Ad Free\'</string>
     <string name="opt_credits">Credits</string>
-    <string name="opt_credits_text">Hanno partecipato allo sviluppo di Film OnLine:\n\nElisa Barindelli:\nIdeazione e sviluppo\n\nPaolo Casillo:\nFunzione di ricerca (dalla versione 1.7)</string>
+    <string name="opt_credits_text">Hanno partecipato allo sviluppo di Film OnLine:\n\nElisa Barindelli:\nIdeazione e sviluppo\n\nPaolo Casillo:\nFunzione di ricerca\n(dalla versione 1.7)</string>
     <string name="opt_contribText">Film OnLine è un progetto open source: scoprite il codice sul repository e unitevi al team.\n\nOppure, se non siete sviluppatori, suggerite nuovi film, idee per migliorare e apporti di ogni genere con una mail.</string>
     <string name="opt_contribTitle">Partecipa</string>
     <string name="opt_contribBtnRep">Repository</string>
