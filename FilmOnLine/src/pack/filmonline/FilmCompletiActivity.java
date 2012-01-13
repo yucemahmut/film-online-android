@@ -43,7 +43,6 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 	public static final String GROUPLIST_LABEL = "groupList";
 	public static  final String CHILDRENIST_LABEL = "childrenList";
 	public static  final String GLOBALLIST_LABEL = "globalList";
-	public static  final String QUERY_LABEL = "searchQuery";
 	//
 	private static final String ONLINE_LIST_URL = "http://dl.dropbox.com/u/12706770/FilmGratis/list.xml";
 	private static final String CONTACT_MAIL = "a.s.hereb@gmail.com";
@@ -64,10 +63,10 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 		setContentView(R.layout.main);	
 			try{
 				//If the movie list has been already read, don't reload it.
-				groupList = (List) savedInstanceState.getSerializable("groupList");
-				childrenList = (List) savedInstanceState.getSerializable("childrenList");
+				groupList = (List) savedInstanceState.getSerializable(GROUPLIST_LABEL);
+				childrenList = (List) savedInstanceState.getSerializable(CHILDRENIST_LABEL);
 				tot = savedInstanceState.getInt("tot");
-				globalList = (List) savedInstanceState.getSerializable("globalList");
+				globalList = (List) savedInstanceState.getSerializable(GLOBALLIST_LABEL);
 			} catch (Exception e){
 				groupList = null;
 				childrenList = null;
@@ -87,10 +86,10 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		//Save lists read from XML to Bundle, so we don't need to read the XML again each time the activity is recreated.	
-		savedInstanceState.putSerializable("groupList", (Serializable) groupList);
-		savedInstanceState.putSerializable("childrenList", (Serializable) childrenList);
+		savedInstanceState.putSerializable(GROUPLIST_LABEL, (Serializable) groupList);
+		savedInstanceState.putSerializable(CHILDRENIST_LABEL, (Serializable) childrenList);
 		savedInstanceState.putInt("tot", tot);
-		savedInstanceState.putSerializable("globalList", (Serializable) globalList);
+		savedInstanceState.putSerializable(GLOBALLIST_LABEL, (Serializable) globalList);
 		savedInstanceState.putBoolean("onSearch", onSearch);
 		super.onSaveInstanceState(savedInstanceState);
 	}
@@ -99,9 +98,9 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		//Get the movie list from Bundle, instead of reading the XML all over again
 		super.onRestoreInstanceState(savedInstanceState);
-		groupList = (List) savedInstanceState.getSerializable("groupList");
-		childrenList = (List) savedInstanceState.getSerializable("childrenList");
-		globalList = (List) savedInstanceState.getSerializable("globalList");
+		groupList = (List) savedInstanceState.getSerializable(GROUPLIST_LABEL);
+		childrenList = (List) savedInstanceState.getSerializable(CHILDRENIST_LABEL);
+		globalList = (List) savedInstanceState.getSerializable(GLOBALLIST_LABEL);
 		onSearch = savedInstanceState.getBoolean("onSearch");
 		tot = savedInstanceState.getInt("tot");
 	}
@@ -110,9 +109,9 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 	public boolean onSearchRequested() {
 		//Pass initialized lists to search, so we don't have to read the XML file again
 		Bundle appData = new Bundle();
-		appData.putSerializable("groupList", (Serializable) groupList);
-		appData.putSerializable("childrenList", (Serializable) childrenList);
-		appData.putSerializable("globalList", (Serializable) globalList);
+		appData.putSerializable(GROUPLIST_LABEL, (Serializable) groupList);
+		appData.putSerializable(CHILDRENIST_LABEL, (Serializable) childrenList);
+		appData.putSerializable(GLOBALLIST_LABEL, (Serializable) globalList);
 		startSearch(null, false, appData, false);
 		return true;
 	}
@@ -126,9 +125,9 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 				//Load budle with lists
 				Bundle appData = getIntent().getBundleExtra(SearchManager.APP_DATA);
 				if (appData != null) {
-					groupList = (List) appData.getSerializable("groupList");
-					childrenList = (List) appData.getSerializable("childrenList");
-					globalList = (List) appData.getSerializable("globalList");
+					groupList = (List) appData.getSerializable(GROUPLIST_LABEL);
+					childrenList = (List) appData.getSerializable(CHILDRENIST_LABEL);
+					globalList = (List) appData.getSerializable(GLOBALLIST_LABEL);
 					String query = intent.getStringExtra(SearchManager.QUERY);
 					onSearch = true;
 					search(query);
@@ -176,7 +175,7 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 			);
 			setListAdapter( expListAdapter );       // setting the adapter in the list.
 		}catch(Exception e){
-			System.out.println("Error: " + e.getMessage());
+			//System.out.println("Error: " + e.getMessage());
 		}
 		registerForContextMenu(getExpandableListView());
 		//Collapse all list groups
@@ -199,7 +198,7 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 			doc.getDocumentElement().normalize();			
 			return (doc.getElementsByTagName("film")).getLength();
 		} catch (Exception e) {
-			System.out.println("XML Pasing Excpetion = " + e);
+			//System.out.println("XML Pasing Excpetion = " + e);
 		}
 		return 0;
 	}
@@ -375,7 +374,7 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 			setListAdapter(expListAdapter); 		// setting the adapter in the list.
 		}
 		catch (Exception e) {
-			System.out.println("Error: " + e.getMessage());
+			//System.out.println("Error: " + e.getMessage());
 		}
 		registerForContextMenu(getExpandableListView());
 		//Expand all list groups
