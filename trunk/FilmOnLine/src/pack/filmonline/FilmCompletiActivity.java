@@ -1,5 +1,6 @@
 package pack.filmonline; 
 
+
 import io.pen.bluepixel.filmonline.R;
 
 import java.io.Serializable;
@@ -7,26 +8,22 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-
 import android.app.AlertDialog;
 import android.app.ExpandableListActivity;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -37,16 +34,20 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
-
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
+import android.widget.Toast;
 import com.google.ads.AdView;
 
 public class FilmCompletiActivity extends ExpandableListActivity{ 
 
 	//Variables Initialization
-	private final String ONLINE_LIST_URL = "http://dl.dropbox.com/u/12706770/FilmGratis/list.xml";
-	private final String CONTACT_MAIL = "a.s.hereb@gmail.com";
+	public static final String GROUPLIST_LABEL = "groupList";
+	public static  final String CHILDRENIST_LABEL = "childrenList";
+	public static  final String GLOBALLIST_LABEL = "globalList";
+	public static  final String QUERY_LABEL = "searchQuery";
+	//
+	private static final String ONLINE_LIST_URL = "http://dl.dropbox.com/u/12706770/FilmGratis/list.xml";
+	private static final String CONTACT_MAIL = "a.s.hereb@gmail.com";
+	//
 	private Document doc; 
 	private SimpleExpandableListAdapter expListAdapter;
 	protected InitTask initTask;
@@ -55,23 +56,23 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 	private List globalList = new ArrayList();
 	private int tot;
 	private AdView adView;
-	private static final String AD_UNIT_ID = "a14f0647dbdca27";
+	private boolean onSearch = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 		setContentView(R.layout.main);	
-	    
-		try{
-			//If the movie list has been already read, don't reload it.
-			groupList = (List) savedInstanceState.getSerializable("groupList");
-			childrenList = (List) savedInstanceState.getSerializable("childrenList");
-			tot = savedInstanceState.getInt("tot");
-			globalList = (List) savedInstanceState.getSerializable("globalList");
-		} catch (Exception e){
-			groupList = null;
-			childrenList = null;
-		}
+			try{
+				//If the movie list has been already read, don't reload it.
+				groupList = (List) savedInstanceState.getSerializable("groupList");
+				childrenList = (List) savedInstanceState.getSerializable("childrenList");
+				tot = savedInstanceState.getInt("tot");
+				globalList = (List) savedInstanceState.getSerializable("globalList");
+			} catch (Exception e){
+				groupList = null;
+				childrenList = null;
+			}
+
 		if(groupList==null | childrenList==null)  {
 			//If the movie list need to be initialized, do it here.
 			progDailog = ProgressDialog.show(this, ""+getText(R.string.loadingTitle), ""+getText(R.string.loading), true);
@@ -85,11 +86,12 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
-		//Save lists read from XML to Bundle, so we don't need to read the XML again each time the activity is recreated.
+		//Save lists read from XML to Bundle, so we don't need to read the XML again each time the activity is recreated.	
 		savedInstanceState.putSerializable("groupList", (Serializable) groupList);
 		savedInstanceState.putSerializable("childrenList", (Serializable) childrenList);
 		savedInstanceState.putInt("tot", tot);
 		savedInstanceState.putSerializable("globalList", (Serializable) globalList);
+		savedInstanceState.putBoolean("onSearch", onSearch);
 		super.onSaveInstanceState(savedInstanceState);
 	}
 
@@ -100,7 +102,60 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 		groupList = (List) savedInstanceState.getSerializable("groupList");
 		childrenList = (List) savedInstanceState.getSerializable("childrenList");
 		globalList = (List) savedInstanceState.getSerializable("globalList");
+		onSearch = savedInstanceState.getBoolean("onSearch");
 		tot = savedInstanceState.getInt("tot");
+	}
+
+	@Override
+	public boolean onSearchRequested() {
+		//Pass initialized lists to search, so we don't have to read the XML file again
+		Bundle appData = new Bundle();
+		appData.putSerializable("groupList", (Serializable) groupList);
+		appData.putSerializable("childrenList", (Serializable) childrenList);
+		appData.putSerializable("globalList", (Serializable) globalList);
+		startSearch(null, false, appData, false);
+		return true;
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		setIntent(intent);
+		// Get the intent, verify the action and get the query
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			try{
+				//Load budle with lists
+				Bundle appData = getIntent().getBundleExtra(SearchManager.APP_DATA);
+				if (appData != null) {
+					groupList = (List) appData.getSerializable("groupList");
+					childrenList = (List) appData.getSerializable("childrenList");
+					globalList = (List) appData.getSerializable("globalList");
+					String query = intent.getStringExtra(SearchManager.QUERY);
+					onSearch = true;
+					search(query);
+				}
+			} catch (Exception e){
+				buildList();
+			}
+		} else{
+			if(groupList==null | childrenList==null)  {
+				//If the movie list need to be initialized, do it here.
+				progDailog = ProgressDialog.show(this, ""+getText(R.string.loadingTitle), ""+getText(R.string.loading), true);
+				progDailog.setIndeterminate(true);
+				initTask = new InitTask();
+				initTask.execute( this );			
+			} else {
+				buildList();
+			}
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		if(onSearch){
+			onSearch=false;
+			buildList();
+		} else
+			finish();
 	}
 
 	private void buildList() {
@@ -124,19 +179,13 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 			System.out.println("Error: " + e.getMessage());
 		}
 		registerForContextMenu(getExpandableListView());
-	}
-	
-	private void buildAd(){
-		// Create the adView
-		Map<String, Object> extras = new HashMap<String, Object>();
-		extras.put("color_bg", "ffffff");
-		extras.put("color_bg_top", "eeeeee");
-		extras.put("color_border", "999999");
-		extras.put("color_link", "000000");
-		extras.put("color_text", "333333");
-		extras.put("color_url", "666666");
-	    adView = new AdView(this, AdSize.BANNER, AD_UNIT_ID);
-	    adView.loadAd(new AdRequest());
+		//Collapse all list groups
+		try{
+			for (int i = 1; i <= expListAdapter.getGroupCount(); i++)
+				getExpandableListView().collapseGroup(i - 1);
+		} catch (Exception e){
+			//List is empty, nothing to close
+		}
 	}
 
 	public int initialize(String urlXml) {
@@ -275,6 +324,65 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 		}
 	}
 
+	//Search function (developed by Paolo Casillo)
+	public void search(String dacercare) {
+		dacercare= dacercare.trim().toUpperCase();
+		if ("".equals(dacercare)) {
+			Toast toast=Toast.makeText(this, getString(R.string.no_search), Toast.LENGTH_LONG);
+			toast.show();
+			return;
+		}
+		List findFilm=new ArrayList();
+		List findCat=new ArrayList();
+		int trovati=0;
+		boolean cat_trovata;
+		for (int i=0; i < childrenList.size(); ++i) {
+			cat_trovata=false;
+			ArrayList<HashMap<String, String>> secList=new ArrayList<HashMap<String, String>>();
+			List<HashMap<String, String>> app=(List<HashMap<String, String>>) childrenList.get(i);
+			HashMap<String, String> child=null;
+			// "film" nodes iteration
+			for (int n=0; n < app.size(); n++) {
+				// populate childrenList
+				child=app.get(n);
+				if (child.get("Sub Item").toUpperCase().contains(dacercare)) {
+					secList.add(child);
+					trovati++;
+					if ( ! cat_trovata) {
+						findCat.add(groupList.get(i));
+						cat_trovata=true;
+					}
+				}
+			}
+			if (cat_trovata) {
+				findFilm.add(secList);
+			}
+		}
+		//Re-buildList
+		TextView total=(TextView) findViewById(R.id.total);
+		total.setText("" + getText(R.string.search_total) + " " + trovati);
+		try {
+			expListAdapter=new SimpleExpandableListAdapter(
+					this, findCat, 					// Creating group List.
+					R.layout.group_row, 			// Group item layout XML.
+					new String[]{"Group Item" }, 	// the key of group item.
+					new int[]{R.id.row_name }, 		// ID of each group item.-Data under the key goes into this TextView.
+					findFilm, 						// childData describes second-level entries.
+					R.layout.child_row, 			// Layout for sub-level entries(second level).
+					new String[]{"Sub Item" }, 		// Keys in childData maps to display.
+					new int[]{R.id.grp_child } 		// Data under the keys above go into these TextViews.
+			);
+			setListAdapter(expListAdapter); 		// setting the adapter in the list.
+		}
+		catch (Exception e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		registerForContextMenu(getExpandableListView());
+		//Expand all list groups
+		for (int i = 1; i <= expListAdapter.getGroupCount(); i++)
+			getExpandableListView().expandGroup(i - 1);
+	}
+
 	public boolean onContextItemSelected(MenuItem menuItem) {
 		//Called when a context menu item is clicked
 		ExpandableListContextMenuInfo info = (ExpandableListContextMenuInfo) menuItem.getMenuInfo();
@@ -283,6 +391,7 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 		childPos = ExpandableListView.getPackedPositionChild(info.packedPosition);
 		String title = ((HashMap)expListAdapter.getChild(groupPos, childPos)).get("Sub Item").toString();
 		String urlWiki = "http://it.wikipedia.org/wiki/" + title.replace(" ", "_");
+		String urlPlaybill = "http://images.google.com/search?tbm=isch&q=locandina+" + title.replace(" ", "%20");
 		//
 		switch (menuItem.getItemId()) {
 		case R.id.cm_info:
@@ -317,6 +426,10 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 			i.putExtra(Intent.EXTRA_SUBJECT, title+" "+getText(R.string.share_subj));
 			i.putExtra(Intent.EXTRA_TEXT, ""+getMovieUrl(title));
 			startActivity(Intent.createChooser(i, title));
+			return true;
+		case R.id.cm_playbill:
+			//Search for playbill in G. Images
+			openUri(Uri.parse(urlPlaybill));
 			return true;
 		}
 		return false;
@@ -364,10 +477,10 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 		case R.id.opt_contrib:
 			//Contribute
 			AlertDialog.Builder contrBuilder = new AlertDialog.Builder(this);
-			contrBuilder.setTitle(R.string.contribTitle);
+			contrBuilder.setTitle(R.string.opt_contribTitle);
 			contrBuilder.setCancelable(true);
-			contrBuilder.setMessage(getText(R.string.contribText));
-			contrBuilder.setPositiveButton(R.string.contribBtnRep, new DialogInterface.OnClickListener() {
+			contrBuilder.setMessage(getText(R.string.opt_contribText));
+			contrBuilder.setPositiveButton(R.string.opt_contribBtnRep, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					//Go to project development page
 					openUri(Uri.parse("http://code.google.com/p/film-online-android/"));
@@ -389,6 +502,18 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 			//Get donation version
 			openUri(Uri.parse("market://details?id=io.pen.bluepixel.filmonlinedonation"));
 			return true;
+		case R.id.opt_credits:
+			//Show credits
+			AlertDialog.Builder creditsBuilder = new AlertDialog.Builder(this);
+			creditsBuilder.setTitle(R.string.opt_credits);
+			creditsBuilder.setCancelable(true);
+			creditsBuilder.setMessage(getText(R.string.opt_credits_text));
+			creditsBuilder.show();
+			return true;
+		case R.id.opt_search:
+			//Open search dialog (as if search button pressed)
+			onSearchRequested();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -403,7 +528,7 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 				createGroupList();
 				createChildList();				
 			}
-			Looper.prepare();
+			//Looper.prepare();
 			//buildAd();
 			return "COMPLETE!";
 		}
@@ -429,14 +554,14 @@ public class FilmCompletiActivity extends ExpandableListActivity{
 			super.onPostExecute(result);
 			progDailog.dismiss();
 			buildList();	
-			
+
 		}
 	}
-	 @Override
-	  public void onDestroy() {
-	    if (adView != null)
-	    	adView.destroy();
-	    super.onDestroy();
-	  }
+	@Override
+	public void onDestroy() {
+		if (adView != null)
+			adView.destroy();
+		super.onDestroy();
+	}
 }
 
