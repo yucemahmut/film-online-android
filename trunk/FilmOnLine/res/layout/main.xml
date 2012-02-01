@@ -20,14 +20,57 @@
 
 
     <!-- Header title START -->
+
+    
+
     <TextView
         android:id="@+id/total"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:textAppearance="@android:style/TextAppearance.Small"
+        android:layout_gravity="left"
         android:background="@android:color/background_dark"
-        android:paddingLeft="16sp" />
+        android:gravity="center"
+        android:paddingBottom="5sp"
+        android:paddingLeft="20sp"
+        android:paddingTop="10sp"
+        android:textAppearance="@android:style/TextAppearance.Small"
+        android:textColor="@android:color/primary_text_dark" />
+    
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/background_dark" > 
+
+        <ImageButton
+            android:id="@+id/imageButtonList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@drawable/list" 
+            android:paddingTop="10sp"/>
+
+        <ImageButton
+            android:id="@+id/imageButtonLatest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:paddingTop="10sp"
+            android:src="@drawable/latest" />
+
+        <ImageButton
+            android:id="@+id/imageButtonSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@drawable/search"
+            android:paddingTop="10sp" />
+    </LinearLayout>
+
     <!-- Header title STOP -->
 
     <!--<View
@@ -48,9 +91,11 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:cacheColorHint="@android:color/transparent"
-            android:childIndicator="@android:drawable/ic_media_play"
-            android:divider="@android:color/tertiary_text_light"
-            android:groupIndicator="@drawable/list_icons" />
+            android:childIndicator="@drawable/dot"
+            android:groupIndicator="@drawable/list_icons" 
+            android:dividerHeight="1sp"
+            android:divider="#dddddd"
+            android:childDivider="@android:color/transparent" />
 
         <TextView
             android:id="@+id/android:empty"

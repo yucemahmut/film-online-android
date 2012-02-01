@@ -1,8 +1,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:paddingBottom="7sp" android:paddingTop="7sp" android:state_expanded="false"><bitmap android:gravity="center" android:src="@drawable/plus" />
+    <item android:state_expanded="false">
+        <bitmap android:gravity="center" android:src="@drawable/plus" />
     </item>
-    <item android:paddingBottom="7sp" android:paddingTop="7sp" android:state_expanded="true"><bitmap android:gravity="center" android:src="@drawable/minus" />
+    <item android:state_expanded="true">
+        <bitmap android:gravity="center" android:src="@drawable/minus" />
     </item>
     <item android:drawable="@android:color/transparent" android:state_empty="true"/>
     <item android:drawable="@android:color/transparent"/>
