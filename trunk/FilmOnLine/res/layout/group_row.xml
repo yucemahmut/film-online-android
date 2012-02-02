@@ -11,8 +11,8 @@
         android:paddingBottom="10sp"
         android:paddingLeft="45sp"
         android:paddingTop="10sp"
-        android:textColor="@android:color/primary_text_light"
-        android:textSize="20sp"
-        android:textStyle="normal"
-        android:typeface="serif" />
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
 </LinearLayout>

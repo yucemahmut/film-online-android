@@ -15,6 +15,8 @@
     <string name="icon_desc">Film OnLine icon</string>
     <string name="loadingTitle">Caricamento</string>
     <string name="loading">Lettura della lista in corso.</string>
+    <string name="playlistLoading">Apertura playlist in corso.</string>
+    <string name="playlistError">Errore durante l\'apertura della playlist.</string>
     <string name="disclaimer">DISCLAIMER:\nFilm OnLine raccoglie link pubblici a contenuti presenti sul web.\n\nI filmati linkati nell\'applicazione sono ospitati su server YouTube e non sono controllati dagli sviluppatori, che declinano pertanto ogni responsabilità circa il loro contenuto.\n\nPer chiedere la rimozione dall\'elenco di un link, contattare lo staff tramite il tasto sottostante, grazie.</string>
     <string name="brokenSubj">Film OnLine: segnalazione link non funzionante</string>
     <string name="brokenText">Questo link non funziona: </string>
@@ -23,6 +25,7 @@
     <string name="cm_wiki">Wikipedia</string>
     <string name="cm_info">IMdb</string>
     <string name="cm_play">Play</string>
+    <string name="cm_playlist">Apri Playlist</string>
     <string name="cm_playbill">Cerca Locandina</string>
     <string name="cm_triler">Cerca Trailer</string>
     <string name="cm_share">Condividi</string>
@@ -45,5 +48,6 @@
     <string name="opt_contribText">Hanno partecipato allo sviluppo di Film OnLine:\n\nElisa Barindelli:\nIdeazione e sviluppo\n\nPaolo Casillo:\nFunzione di ricerca\n(dalla versione 1.7)\n\nFilm OnLine è un progetto open source: scoprite il codice sul repository e unitevi al team.\n\nOppure, se non siete sviluppatori, suggerite nuovi film, idee per migliorare e apporti di ogni genere con una mail.</string>
     <string name="opt_contribTitle">Credits</string>
     <string name="opt_contribBtnRep">Repository</string>
+    <string name="opt_latest">Ultime aggiunte</string>
 
 </resources>

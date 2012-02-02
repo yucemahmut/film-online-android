@@ -23,7 +23,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -49,10 +48,18 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	public static final String GLOBALLIST_LABEL = "globalList";
 	public static final String GROUPLIST_NEW_LABEL = "groupListNew";
 	public static final String CHILDRENIST_NEW_LABEL = "childrenListNew";
+	public static final String GROUPLIST_LABEL_SEARCH = "groupListSearch";
+	public static final String CHILDRENIST_LABEL_SEARCH = "childrenListSearch";
 	public static final String GLOBALLIST_NEW_LABEL = "globalListNew";
 	public static final String TOT_LABEL = "tot";
+	public static final String TOT_NEW_LABEL = "tot_new";
+	public static final String TOT_SEARCH_LABEL = "tot_search";
 	public static final String LATEST_LABEL = "latest";
 	public static final String ONSEARCH_LABEL = "onSearch";
+	public static final String PLAYLISTID_LABEL = "playlistId";
+	public static final int RESULTCODE = 0;
+	public static final int RESULTCODE_OK = 1;
+	public static final int RESULTCODE_KO = 2;
 	//
 	private static final String ONLINE_LIST_URL = "http://dl.dropbox.com/u/12706770/FilmGratis/list.xml";
 	private static final String NEW_LIST_URL = "http://dl.dropbox.com/u/12706770/FilmGratis/new.xml";
@@ -62,10 +69,10 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	private SimpleExpandableListAdapter expListAdapter;
 	protected InitTask initTask;
 	private ProgressDialog progDailog;
-	private List groupList, childrenList, groupListNew, childrenListNew;
+	private List groupList, childrenList, groupListNew, childrenListNew, groupListSearch, childrenListSearch;
 	private List globalList = new ArrayList();
 	private List globalListNew = new ArrayList();
-	private int tot, tot_new;
+	private int tot, tot_new, tot_serach;
 	private boolean onLatestFlag = false;
 	private boolean onSearchFlag = false;
 
@@ -75,26 +82,16 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		setContentView(R.layout.main);
 		try {
 			// If the movie list has been already read, don't reload it.
-			groupList = (List) savedInstanceState.getSerializable(GROUPLIST_LABEL);
-			childrenList = (List) savedInstanceState.getSerializable(CHILDRENIST_LABEL);
-			groupListNew = (List) savedInstanceState.getSerializable(GROUPLIST_NEW_LABEL);
-			childrenListNew = (List) savedInstanceState.getSerializable(CHILDRENIST_NEW_LABEL);
-			tot = savedInstanceState.getInt(TOT_LABEL);
-			globalList = (List) savedInstanceState.getSerializable(GLOBALLIST_LABEL);
-			globalListNew = (List) savedInstanceState.getSerializable(GLOBALLIST_NEW_LABEL);
+			getBundle(savedInstanceState);
 		} catch (Exception e) {
 			groupList = null;
 			childrenList = null;
+			childrenListNew = null;
+			groupListNew = null;
 		}
-
-		if (groupList == null | childrenList == null) {
-			// If the movie list need to be initialized, do it here.
-			progDailog = ProgressDialog.show(this, ""
-					+ getText(R.string.loadingTitle), ""
-					+ getText(R.string.loading), true);
-			progDailog.setIndeterminate(true);
-			initTask = new InitTask();
-			initTask.execute(this);
+		if (groupList == null | childrenList == null | groupListNew == null | childrenListNew == null) {
+			// If the movie lists need to be initialized, do it here.
+			loadList();
 		} else {
 			buildList();
 		}
@@ -103,37 +100,42 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		final ImageButton searchBtn = (ImageButton) findViewById(R.id.imageButtonSearch);
 		final ImageButton listBtn = (ImageButton) findViewById(R.id.imageButtonList);
 		final ImageButton latestBtn = (ImageButton) findViewById(R.id.imageButtonLatest);
-		
+
 		searchBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				onSearchFlag = true;
-				onLatestFlag = false;
 				setButtonColors();
 				onSearchRequested();
 			}
 		});
-		
+
 		latestBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				latestBtn.setBackgroundColor(Color.WHITE);
-				searchBtn.setBackgroundColor(Color.BLACK);
 				onSearchFlag = false;
 				onLatestFlag = true;
 				setButtonColors();
-				loadList();
+				if (groupList == null | childrenList == null | groupListNew == null | childrenListNew == null) {
+					// If the movie list need to be initialized, do it here.
+					loadList();
+				} else {
+					buildList();
+				}
 			}
 		});
-		
+
 		listBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				listBtn.setBackgroundColor(Color.WHITE);
 				onSearchFlag = false;
 				onLatestFlag = false;
 				setButtonColors();
-				loadList();
+				if (groupList == null | childrenList == null | groupListNew == null | childrenListNew == null) {
+					// If the movie list need to be initialized, do it here.
+					loadList();
+				} else {
+					buildList();
+				}
 			}
 		});
 		setButtonColors();
@@ -143,15 +145,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		// Save lists read from XML to Bundle, so we don't need to read the XML
 		// again each time the activity is recreated.
-		savedInstanceState.putSerializable(GROUPLIST_LABEL,(Serializable) groupList);
-		savedInstanceState.putSerializable(CHILDRENIST_LABEL,(Serializable) childrenList);
-		savedInstanceState.putSerializable(GROUPLIST_NEW_LABEL,(Serializable) groupListNew);
-		savedInstanceState.putSerializable(CHILDRENIST_NEW_LABEL,(Serializable) childrenListNew);
-		savedInstanceState.putInt(TOT_LABEL, tot);
-		savedInstanceState.putSerializable(GLOBALLIST_LABEL,(Serializable) globalList);
-		savedInstanceState.putSerializable(GLOBALLIST_NEW_LABEL,(Serializable) globalListNew);
-		savedInstanceState.putBoolean(ONSEARCH_LABEL, onSearchFlag);
-		savedInstanceState.putBoolean(LATEST_LABEL, onLatestFlag);
+		saveBundle(savedInstanceState);
 		super.onSaveInstanceState(savedInstanceState);
 	}
 
@@ -159,15 +153,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		// Get the movie list from Bundle, instead of reading the XML all over again
 		super.onRestoreInstanceState(savedInstanceState);
-		groupList = (List) savedInstanceState.getSerializable(GROUPLIST_LABEL);
-		childrenList = (List) savedInstanceState.getSerializable(CHILDRENIST_LABEL);
-		globalList = (List) savedInstanceState.getSerializable(GLOBALLIST_LABEL);
-		groupListNew = (List) savedInstanceState.getSerializable(GROUPLIST_NEW_LABEL);
-		childrenListNew = (List) savedInstanceState.getSerializable(CHILDRENIST_NEW_LABEL);
-		globalListNew = (List) savedInstanceState.getSerializable(GLOBALLIST_NEW_LABEL);
-		onSearchFlag = savedInstanceState.getBoolean(ONSEARCH_LABEL);
-		onLatestFlag = savedInstanceState.getBoolean(LATEST_LABEL);
-		tot = savedInstanceState.getInt(TOT_LABEL);
+		getBundle(savedInstanceState);
 	}
 
 	@Override
@@ -201,7 +187,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 				buildList();
 			}
 		} else {
-			if (groupList == null | childrenList == null) {
+			if (groupList == null | childrenList == null | groupListNew == null | childrenListNew == null) {
 				// If the movie list need to be initialized, do it here.
 				loadList();
 			} else {
@@ -214,45 +200,83 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	public void onBackPressed() {
 		if (onSearchFlag) {
 			onSearchFlag = false;
+			onLatestFlag = false;
 			buildList();
+			setButtonColors();
 		} else
 			finish();
+	}
+	
+	private void getBundle(Bundle savedInstanceState){
+		groupList = (List) savedInstanceState.getSerializable(GROUPLIST_LABEL);
+		childrenList = (List) savedInstanceState.getSerializable(CHILDRENIST_LABEL);
+		groupListNew = (List) savedInstanceState.getSerializable(GROUPLIST_NEW_LABEL);
+		childrenListNew = (List) savedInstanceState.getSerializable(CHILDRENIST_NEW_LABEL);
+		groupListSearch = (List) savedInstanceState.getSerializable(GROUPLIST_LABEL_SEARCH);
+		childrenListSearch = (List) savedInstanceState.getSerializable(CHILDRENIST_LABEL_SEARCH);
+		tot = savedInstanceState.getInt(TOT_LABEL);
+		tot_new = savedInstanceState.getInt(TOT_NEW_LABEL);
+		tot_serach = savedInstanceState.getInt(TOT_SEARCH_LABEL);
+		globalList = (List) savedInstanceState.getSerializable(GLOBALLIST_LABEL);
+		globalListNew = (List) savedInstanceState.getSerializable(GLOBALLIST_NEW_LABEL);
+		onSearchFlag = savedInstanceState.getBoolean(ONSEARCH_LABEL);
+		onLatestFlag = savedInstanceState.getBoolean(LATEST_LABEL);
+	}
+	
+	private void saveBundle(Bundle savedInstanceState){
+		savedInstanceState.putSerializable(GROUPLIST_LABEL,(Serializable) groupList);
+		savedInstanceState.putSerializable(CHILDRENIST_LABEL,(Serializable) childrenList);
+		savedInstanceState.putSerializable(GROUPLIST_NEW_LABEL,(Serializable) groupListNew);
+		savedInstanceState.putSerializable(CHILDRENIST_NEW_LABEL,(Serializable) childrenListNew);
+		savedInstanceState.putSerializable(GROUPLIST_LABEL_SEARCH,(Serializable) groupListSearch);
+		savedInstanceState.putSerializable(CHILDRENIST_LABEL_SEARCH,(Serializable) childrenListSearch);
+		savedInstanceState.putInt(TOT_LABEL, tot);
+		savedInstanceState.putInt(TOT_SEARCH_LABEL, tot_serach);
+		savedInstanceState.putInt(TOT_NEW_LABEL, tot_new);
+		savedInstanceState.putSerializable(GLOBALLIST_LABEL,(Serializable) globalList);
+		savedInstanceState.putSerializable(GLOBALLIST_NEW_LABEL,(Serializable) globalListNew);
+		savedInstanceState.putBoolean(ONSEARCH_LABEL, onSearchFlag);
+		savedInstanceState.putBoolean(LATEST_LABEL, onLatestFlag);
 	}
 
 	private void setButtonColors(){
 		ImageButton searchBtn = (ImageButton) findViewById(R.id.imageButtonSearch);
 		ImageButton listBtn = (ImageButton) findViewById(R.id.imageButtonList);
 		ImageButton latestBtn = (ImageButton) findViewById(R.id.imageButtonLatest);
-		
+
 		if(!onSearchFlag)
-			searchBtn.setBackgroundColor(Color.BLACK);
+			searchBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.black_white_gradient));
 		else
-			searchBtn.setBackgroundColor(Color.WHITE);
-		
+			searchBtn.setBackgroundColor(getResources().getColor(R.color.white));
+
 		if(!onLatestFlag)
-			latestBtn.setBackgroundColor(Color.BLACK);
+			latestBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.black_white_gradient));
 		else
-			latestBtn.setBackgroundColor(Color.WHITE);
-		
+			latestBtn.setBackgroundColor(getResources().getColor(R.color.white));
+
 		if(onLatestFlag || onSearchFlag)
-			listBtn.setBackgroundColor(Color.BLACK);
+			listBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.black_white_gradient));
 		else
-			listBtn.setBackgroundColor(Color.WHITE);
+			listBtn.setBackgroundColor(getResources().getColor(R.color.white));
 	}
+
 	private void buildList() {
 		// Populate the movie list
 		TextView total = (TextView) findViewById(R.id.total);
 		List children, group;
-		if (!onLatestFlag){
+		if (onLatestFlag){
+			total.setText("" + getText(R.string.latest) + " " + tot_new);
+			children = childrenListNew;
+			group = groupListNew;
+		} else if (onSearchFlag){
+			total.setText("" + getText(R.string.search_total) + " " + tot_serach);
+			children = childrenListSearch;
+			group = groupListSearch;
+		} else {
 			total.setText("" + getText(R.string.total) + " " + tot);
 			children = childrenList;
 			group = groupList;
-			}
-		else{
-			total.setText("" + getText(R.string.latest) + " " + tot);
-			children = childrenListNew;
-			group = groupListNew;
-			}
+		}
 		try {
 			expListAdapter = new SimpleExpandableListAdapter(this, 
 					group, // Creating group List.
@@ -305,8 +329,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		NodeList nodeList = doc.getElementsByTagName("category");
 		for (int i = 0; i < nodeList.getLength(); ++i) {
 			HashMap m = new HashMap();
-			m.put("Group Item",
-					((Element) nodeList.item(i)).getAttribute("cat"));
+			m.put("Group Item",((Element) nodeList.item(i)).getAttribute("cat"));
 			resultG.add(m);
 		}
 		if (newestFlag)
@@ -314,7 +337,6 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		else
 			groupList = resultG;
 	}
-	
 
 	private void createChildList(boolean newestFlag) {
 		// Create the HashMap for the children
@@ -357,14 +379,21 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	}
 
 	@Override
-	public boolean onChildClick(ExpandableListView parent, View v,
-			int groupPosition, int childPosition, long id) {
+	public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 		// Called on each child click
-		String title = ((HashMap) expListAdapter.getChild(groupPosition,
-				childPosition)).get("Sub Item").toString();
+		String title = ((HashMap) expListAdapter.getChild(groupPosition, childPosition)).get("Sub Item").toString();
 		openMovie(title);
 		return true;
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,
+            Intent data) {
+        if (requestCode == RESULTCODE) {
+            if (resultCode == RESULTCODE_KO) 
+            	 Toast.makeText(getApplicationContext(), getResources().getString(R.string.playlistError), Toast.LENGTH_SHORT).show();
+        }
+    }
 
 	private void openMovie(String title) {
 		// Opens the selected movie, identified by "title"
@@ -420,6 +449,23 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		}
 		return null;
 	}
+	
+	private String getPlaylistId(String title) {
+		// Gets the playlist ID (without "PL") on YouTube starting from movie title
+		List list;
+		if (onLatestFlag)
+			list = globalListNew;
+		else
+			list = globalList;
+		for (int i = 0; i < list.size(); i++) {
+			List<String> film = (List<String>) list.get(i);
+			if (film.get(0).equals(title)) {
+				if (!film.get(2).equals(""))
+					return film.get(2).substring(2);
+			}
+		}
+		return null;
+	}
 
 	@Override
 	public void onGroupExpand(int groupPosition) {
@@ -428,23 +474,33 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		// Called on long-tap on child element in movie list
 		super.onCreateContextMenu(menu, v, menuInfo);
 		ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.ExpandableListContextMenuInfo) menuInfo;
-		int type = ExpandableListView
-		.getPackedPositionType(info.packedPosition);
-		int group = ExpandableListView
-		.getPackedPositionGroup(info.packedPosition);
-		int child = ExpandableListView
-		.getPackedPositionChild(info.packedPosition);
+		int type = ExpandableListView.getPackedPositionType(info.packedPosition);
+		int group = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+		int child = ExpandableListView.getPackedPositionChild(info.packedPosition);
 		// Only create a context menu for child items
 		if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
-			menu.setHeaderTitle(((HashMap) expListAdapter
-					.getChild(group, child)).get("Sub Item").toString());
+			String title = ((HashMap) expListAdapter.getChild(group, child)).get("Sub Item").toString();
+			menu.setHeaderTitle(title);
+			//Create different menu for playlist or full entry
 			MenuInflater inflater = getMenuInflater();
-			inflater.inflate(R.menu.cm_menu, menu);
+			List list;
+			if (onLatestFlag)
+				list = globalListNew;
+			else
+				list = globalList;
+			for (int i = 0; i < list.size(); i++) {
+				List<String> film = (List<String>) list.get(i);
+				if (film.get(0).equals(title)) {
+					if (!film.get(2).equals("")) 
+						inflater.inflate(R.menu.cm_menu_playlist, menu); //Playlist
+					else
+						inflater.inflate(R.menu.cm_menu, menu); //Full
+				}
+			}
 		}
 	}
 
@@ -452,8 +508,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	public void search(String dacercare) {
 		dacercare = dacercare.trim().toUpperCase();
 		if ("".equals(dacercare)) {
-			Toast toast = Toast.makeText(this, getString(R.string.no_search),
-					Toast.LENGTH_LONG);
+			Toast toast = Toast.makeText(this, getString(R.string.no_search),Toast.LENGTH_LONG);
 			toast.show();
 			return;
 		}
@@ -484,13 +539,16 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 				findFilm.add(secList);
 			}
 		}
+		// Save lists
+		groupListSearch = findCat;
+		childrenListSearch = findFilm;
+		tot_serach = trovati;
 		// Re-buildList
 		TextView total = (TextView) findViewById(R.id.total);
 		total.setText("" + getText(R.string.search_total) + " " + trovati);
 		try {
-			expListAdapter = new SimpleExpandableListAdapter(this, findCat, // Creating
-					// group
-					// List.
+			expListAdapter = new SimpleExpandableListAdapter(this, 
+					findCat, // Creating group List.
 					R.layout.group_row, // Group item layout XML.
 					new String[] { "Group Item" }, // the key of group item.
 					new int[] { R.id.row_name }, // ID of each group item.-Data under the key goes into this TextView.
@@ -507,6 +565,10 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		// Expand all list groups
 		for (int i = 1; i <= expListAdapter.getGroupCount(); i++)
 			getExpandableListView().expandGroup(i - 1);
+		//
+		onSearchFlag = true;
+		onLatestFlag = false;
+		setButtonColors();
 	}
 
 	@Override
@@ -568,6 +630,12 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		case R.id.cm_playbill:
 			// Search for playbill in G. Images
 			openUri(Uri.parse(urlPlaybill));
+			return true;
+		case R.id.cm_playlist:
+			// Call activity to handle the playlist
+			Intent intent = new Intent(getBaseContext(), PlaylistActivity.class);
+			intent.putExtra(PLAYLISTID_LABEL, getPlaylistId(title));
+			startActivityForResult(intent, RESULTCODE);
 			return true;
 		}
 		return false;
@@ -665,6 +733,23 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 			openUri(Uri
 					.parse("market://details?id=io.pen.bluepixel.filmonlinedonation"));
 			return true;
+		case R.id.opt_search:
+			//Open search dialog (as if search button pressed)
+			onSearchRequested();
+			return true;
+		case R.id.opt_latest:
+			//Open "recently added" tab
+			onSearchFlag = false;
+			onLatestFlag = true;
+			setButtonColors();
+			if (groupList == null | childrenList == null | groupListNew == null | childrenListNew == null) {
+				// If the movie list need to be initialized, do it here.
+				loadList();
+			} else {
+				buildList();
+			}
+			return true;
+			//
 			// case R.id.opt_credits:
 			// //Show credits
 			// AlertDialog.Builder creditsBuilder = new
@@ -674,22 +759,19 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 			// creditsBuilder.setMessage(getText(R.string.opt_credits_text));
 			// creditsBuilder.show();
 			// return true;
-			// case R.id.opt_search:
-			// //Open search dialog (as if search button pressed)
-			// onSearchRequested();
-			// return true;
+			//
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	private void loadList(){
-			progDailog = ProgressDialog.show(this, ""
-					+ getText(R.string.loadingTitle), ""
-					+ getText(R.string.loading), true);
-			progDailog.setIndeterminate(true);
-			initTask = new InitTask();
-			initTask.execute(this);
+		progDailog = ProgressDialog.show(this, ""
+				+ getText(R.string.loadingTitle), ""
+				+ getText(R.string.loading), true);
+		progDailog.setIndeterminate(true);
+		initTask = new InitTask();
+		initTask.execute(this);
 	}
 
 	protected class InitTask extends AsyncTask<Context, Integer, String> {
