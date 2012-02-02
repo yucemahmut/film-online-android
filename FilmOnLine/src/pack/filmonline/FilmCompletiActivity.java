@@ -630,7 +630,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		case R.id.cm_playbill:
 			// Search for playbill in G. Images
 			openUri(Uri.parse(urlPlaybill));
-			return true;
+			return true; 
 		case R.id.cm_playlist:
 			// Call activity to handle the playlist
 			Intent intent = new Intent(getBaseContext(), PlaylistActivity.class);
