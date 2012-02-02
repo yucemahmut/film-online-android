@@ -9,9 +9,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:paddingBottom="12sp"
-        android:paddingLeft="60sp"
+        android:paddingLeft="30sp"
         android:paddingTop="12sp"
-        android:textColor="@android:color/secondary_text_light"
-		android:typeface="sans" />
+        android:textColor="@color/darkgray"
+		android:typeface="sans"
+		android:textSize="14sp" />
 
 </RelativeLayout>
