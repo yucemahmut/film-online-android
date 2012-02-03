@@ -7,6 +7,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,22 +28,16 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.gdata.client.youtube.YouTubeService;
-import com.google.gdata.data.youtube.PlaylistEntry;
-import com.google.gdata.data.youtube.PlaylistFeed;
-
 public class PlaylistActivity extends ListActivity {
 	private String playlistID = "";
-	private final String apiKey = "AI39si6qtLTRcvw1camffVD8vogTIgvaeWsCBa5zPwJjWK6D8-WJpldFaTk3A_D8GwCbDipFuP0AYum_kfV0eBYmEL0HEfMCrg";
 	private final String appName = "Film OnLine";
-	private final YouTubeService service = new YouTubeService(appName, apiKey);
 	private List<String> TITLES = new ArrayList<String>();
 	private List<String> URLS = new ArrayList<String>();
 	public static final String TITLES_LABEL = "titles";
 	public static final String URLS_LABEL = "urls";
-	private ProgressDialog progDailog;
+	private ProgressDialog progDailog; 
 	protected InitTask initTask;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,37 +50,46 @@ public class PlaylistActivity extends ListActivity {
 			loadList();
 		}		
 	}
-	
+
 	private void apiCall(){
 		//Get playlist ID
 		Bundle extras = getIntent().getExtras(); 
 		playlistID = extras.getString(FilmCompletiActivity.PLAYLISTID_LABEL);
+		String title = extras.getString(FilmCompletiActivity.TITLE_LABEL);
+		Document doc = null;
 		//Get playlist parts 
 		try {
-			PlaylistFeed playlistFeed = service.getFeed(new URL(playlistID), PlaylistFeed.class);
-			for(PlaylistEntry playlistEntry : playlistFeed.getEntries()) {
-				TITLES.add(playlistEntry.getTitle().getPlainText());
-				URLS.add(playlistEntry.getHtmlLink().getHref());
-			}
+			URL url = new URL("http://gdata.youtube.com/feeds/api/playlists/"+playlistID+"?v=2");
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			doc = db.parse(new InputSource(url.openStream()));
+			doc.getDocumentElement().normalize();
 		} catch (Exception e) {
+			//System.out.println("XML Pasing Excpetion = " + e);
 			setResult(FilmCompletiActivity.RESULTCODE_KO);
 			finish();
 		}
+		NodeList nodeList = doc.getElementsByTagName("yt:videoid");
+		for (int i = 0; i < nodeList.getLength(); ++i) {
+			int index = i+1;
+			TITLES.add(title + " "+index);
+			URLS.add(((Element) nodeList.item(i)).getTextContent());
+		}
 	}
-	
+
 	private void loadList(){
 		progDailog = ProgressDialog.show(this, ""
 				+ getText(R.string.loadingTitle), ""
-				+ getText(R.string.playlistLoading), true);
+						+ getText(R.string.playlistLoading), true);
 		progDailog.setIndeterminate(true);
 		initTask = new InitTask();
 		initTask.execute(this);
 	}
-	
-	private void buildList(){
-		setListAdapter(new ArrayAdapter<String>(this, R.layout.child_row, TITLES));
 
-		ListView lv = (ListView) findViewById(R.id.playlistList);
+	private void buildList(){
+		setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item, TITLES));
+
+		ListView lv = getListView();
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -86,14 +97,14 @@ public class PlaylistActivity extends ListActivity {
 			}
 		});
 	}
-	
+
 	private void openMovie(int pos) {
 		// Opens the selected movie, identified by "title"
 		Uri uri = Uri.parse(URLS.get(pos));
 		Intent i = new Intent(Intent.ACTION_VIEW, uri);
 		startActivity(i);
 	}
-	
+
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		// Save API results to Bundle
@@ -108,8 +119,8 @@ public class PlaylistActivity extends ListActivity {
 		TITLES = (List) savedInstanceState.getSerializable(TITLES_LABEL);
 		URLS = (List) savedInstanceState.getSerializable(URLS_LABEL);
 	}
-	
-	
+
+
 	protected class InitTask extends AsyncTask<Context, Integer, String> {
 		// Background task to parse the remote XML list, while showing a nice "Loading" dialog.
 		@Override

@@ -57,6 +57,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	public static final String LATEST_LABEL = "latest";
 	public static final String ONSEARCH_LABEL = "onSearch";
 	public static final String PLAYLISTID_LABEL = "playlistId";
+	public static final String TITLE_LABEL = "title";
 	public static final int RESULTCODE = 0;
 	public static final int RESULTCODE_OK = 1;
 	public static final int RESULTCODE_KO = 2;
@@ -635,6 +636,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 			// Call activity to handle the playlist
 			Intent intent = new Intent(getBaseContext(), PlaylistActivity.class);
 			intent.putExtra(PLAYLISTID_LABEL, getPlaylistId(title));
+			intent.putExtra(TITLE_LABEL, title);
 			startActivityForResult(intent, RESULTCODE);
 			return true;
 		}
