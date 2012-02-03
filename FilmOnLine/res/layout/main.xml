@@ -1,9 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:id="@+id/mainLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
+    android:gravity="center_vertical"
     android:orientation="vertical" >
 
     <!-- AdMob START -->
@@ -22,7 +23,7 @@
     <TextView
         android:id="@+id/total"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="left"
         android:background="@drawable/black_white_gradient"
         android:gravity="left"
@@ -30,14 +31,16 @@
         android:paddingLeft="20sp"
         android:paddingTop="5sp"
         android:textAppearance="@android:style/TextAppearance.Small"
-        android:textColor="@android:color/primary_text_dark" />
+        android:textColor="@android:color/primary_text_dark"
+        android:layout_alignParentBottom="true" />
     
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="wrap_content" 
         android:layout_gravity="center"
-        android:background="@color/background" > 
+        android:background="@color/background"
+        android:layout_below="@id/adView" > 
 
         <ImageButton
             android:id="@+id/imageButtonList"
@@ -47,7 +50,7 @@
             android:layout_weight="1"
             android:alpha="180"
             android:paddingTop="10sp"
-            android:src="@drawable/list" />
+            android:src="@android:drawable/ic_menu_sort_by_size" />
 
         <ImageButton
             android:id="@+id/imageButtonLatest"
@@ -57,7 +60,7 @@
             android:layout_weight="1"
             android:alpha="180"
             android:paddingTop="10sp"
-            android:src="@drawable/latest" />
+            android:src="@android:drawable/ic_menu_agenda" />
 
         <ImageButton
             android:id="@+id/imageButtonSearch"
@@ -67,7 +70,7 @@
             android:layout_weight="1"
             android:alpha="180"
             android:paddingTop="10sp"
-            android:src="@drawable/search" />
+            android:src="@android:drawable/ic_menu_search" />
     </LinearLayout>
 
     <!-- Header title STOP -->
@@ -85,7 +88,9 @@
         android:layout_height="fill_parent"
         android:paddingLeft="16sp" 
         android:paddingRight="16sp"
-        android:paddingTop="5sp" >
+        android:paddingTop="5sp"
+        android:layout_below="@id/linearLayout1"
+        android:layout_marginBottom="55dp" >
 
         <ExpandableListView
             android:id="@+id/android:list"
@@ -107,4 +112,4 @@
             android:textColor="@color/darkgray" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
