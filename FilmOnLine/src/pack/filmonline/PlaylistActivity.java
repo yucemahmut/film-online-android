@@ -23,14 +23,17 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class PlaylistActivity extends ListActivity {
 	private String playlistID = "";
-	private final String appName = "Film OnLine";
+	private final String PART_TAG = "Playlist - Parte ";
 	private List<String> TITLES = new ArrayList<String>();
 	private List<String> URLS = new ArrayList<String>();
 	public static final String TITLES_LABEL = "titles";
@@ -48,14 +51,26 @@ public class PlaylistActivity extends ListActivity {
 			buildList();
 		} catch (Exception e) {
 			loadList();
-		}		
+		}	
+		//Set title
+		Bundle extras = getIntent().getExtras(); 
+		TextView tv = (TextView) findViewById(R.id.playlistTitle);
+		tv.setText(extras.getString(FilmCompletiActivity.TITLE_LABEL));
+		
+		//Set listeners
+		final ImageButton backBtn = (ImageButton) findViewById(R.id.playlistBack);
+		backBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 	}
 
 	private void apiCall(){
 		//Get playlist ID
 		Bundle extras = getIntent().getExtras(); 
 		playlistID = extras.getString(FilmCompletiActivity.PLAYLISTID_LABEL);
-		String title = extras.getString(FilmCompletiActivity.TITLE_LABEL);
 		Document doc = null;
 		//Get playlist parts 
 		try {
@@ -72,8 +87,8 @@ public class PlaylistActivity extends ListActivity {
 		NodeList nodeList = doc.getElementsByTagName("yt:videoid");
 		for (int i = 0; i < nodeList.getLength(); ++i) {
 			int index = i+1;
-			TITLES.add(title + " "+index);
-			URLS.add(((Element) nodeList.item(i)).getTextContent());
+			TITLES.add(PART_TAG + index);
+			URLS.add("http://www.youtube.com/watch?v="+((Element) nodeList.item(i)).getTextContent());
 		}
 	}
 

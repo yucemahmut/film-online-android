@@ -65,6 +65,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	private static final String ONLINE_LIST_URL = "http://dl.dropbox.com/u/12706770/FilmGratis/list.xml";
 	private static final String NEW_LIST_URL = "http://dl.dropbox.com/u/12706770/FilmGratis/new.xml";
 	private static final String CONTACT_MAIL = "film.online.android@gmail.com";
+	private static final String PLAYLIST_TAG = " (Playlist)";
 	//
 	private Document doc;
 	private SimpleExpandableListAdapter expListAdapter;
@@ -98,17 +99,8 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		}
 
 		// Set listeners
-		final ImageButton searchBtn = (ImageButton) findViewById(R.id.imageButtonSearch);
 		final ImageButton listBtn = (ImageButton) findViewById(R.id.imageButtonList);
 		final ImageButton latestBtn = (ImageButton) findViewById(R.id.imageButtonLatest);
-
-		searchBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				setButtonColors();
-				onSearchRequested();
-			}
-		});
 
 		latestBtn.setOnClickListener(new OnClickListener() {
 			@Override
@@ -241,24 +233,18 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	}
 
 	private void setButtonColors(){
-		ImageButton searchBtn = (ImageButton) findViewById(R.id.imageButtonSearch);
 		ImageButton listBtn = (ImageButton) findViewById(R.id.imageButtonList);
 		ImageButton latestBtn = (ImageButton) findViewById(R.id.imageButtonLatest);
 
-		if(!onSearchFlag)
-			searchBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.black_white_gradient));
-		else
-			searchBtn.setBackgroundColor(getResources().getColor(R.color.white));
 
-		if(!onLatestFlag)
-			latestBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.black_white_gradient));
-		else
+		if(onLatestFlag){
 			latestBtn.setBackgroundColor(getResources().getColor(R.color.white));
-
-		if(onLatestFlag || onSearchFlag)
 			listBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.black_white_gradient));
-		else
+		}
+		else{
+			latestBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.black_white_gradient));
 			listBtn.setBackgroundColor(getResources().getColor(R.color.white));
+		}
 	}
 
 	private void buildList() {
@@ -353,9 +339,12 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 			for (int n = 0; n < filmList.getLength(); n++) {
 				List<String> film = new ArrayList<String>();
 				// populate childrenList
+				String title = ((Element) filmList.item(n)).getAttribute("id");
+				// add "Playlist" tag if needed
+				if (!((Element) filmList.item(n)).getAttribute("list").equals(""))
+					title = title + PLAYLIST_TAG;
 				HashMap child = new HashMap();
-				child.put("Sub Item",
-						((Element) filmList.item(n)).getAttribute("id"));
+				child.put("Sub Item", title);
 				secList.add(child);
 				// populate globalList
 				film.add("" + ((Element) filmList.item(n)).getAttribute("id"));
@@ -383,7 +372,16 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 		// Called on each child click
 		String title = ((HashMap) expListAdapter.getChild(groupPosition, childPosition)).get("Sub Item").toString();
-		openMovie(title);
+		title = title.replace(PLAYLIST_TAG, "");
+		if (isPlaylist(title)){
+			// Call activity to handle the playlist
+			Intent intent = new Intent(getBaseContext(), PlaylistActivity.class);
+			intent.putExtra(PLAYLISTID_LABEL, getPlaylistId(title));
+			intent.putExtra(TITLE_LABEL, title);
+			startActivityForResult(intent, RESULTCODE);
+			}
+		else
+			openMovie(title);
 		return true;
 	}
 	
@@ -395,6 +393,24 @@ public class FilmCompletiActivity extends ExpandableListActivity {
             	 Toast.makeText(getApplicationContext(), getResources().getString(R.string.playlistError), Toast.LENGTH_SHORT).show();
         }
     }
+	
+	private boolean isPlaylist(String title){
+		List list;
+		if (onLatestFlag)
+			list = globalListNew;
+		else
+			list = globalList;
+		for (int i = 0; i < list.size(); i++) {
+			List<String> film = (List<String>) list.get(i);
+			if (film.get(0).equals(title)) {
+				if (!film.get(2).equals("")) 
+					return true; //Playlist
+				else
+					return false; //Full
+			}
+		}
+		return false;
+	}
 
 	private void openMovie(String title) {
 		// Opens the selected movie, identified by "title"
@@ -443,8 +459,8 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 			List<String> film = (List<String>) list.get(i);
 			if (film.get(0).equals(title)) {
 				String temp = "http://www.youtube.com/watch?v=" + film.get(1);
-				if (!film.get(2).equals(""))
-					temp += "&list=" + film.get(2) + "&feature=plpp_play_all";
+//				if (!film.get(2).equals(""))
+//					temp += "&list=" + film.get(2) + "&feature=plpp_play_all";
 				return temp;
 			}
 		}
@@ -485,6 +501,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		// Only create a context menu for child items
 		if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
 			String title = ((HashMap) expListAdapter.getChild(group, child)).get("Sub Item").toString();
+			title = title.replace(PLAYLIST_TAG, "");
 			menu.setHeaderTitle(title);
 			//Create different menu for playlist or full entry
 			MenuInflater inflater = getMenuInflater();
@@ -582,12 +599,10 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		.getPackedPositionGroup(info.packedPosition);
 		childPos = ExpandableListView
 		.getPackedPositionChild(info.packedPosition);
-		String title = ((HashMap) expListAdapter.getChild(groupPos, childPos))
-		.get("Sub Item").toString();
-		String urlWiki = "http://it.wikipedia.org/wiki/"
-			+ title.replace(" ", "_");
-		String urlPlaybill = "http://images.google.com/search?tbm=isch&q=locandina+"
-			+ title.replace(" ", "%20");
+		String title = ((HashMap) expListAdapter.getChild(groupPos, childPos)).get("Sub Item").toString();
+		title = title.replace(PLAYLIST_TAG, "");
+		String urlWiki = "http://it.wikipedia.org/wiki/"+ title.replace(" ", "_");
+		String urlPlaybill = "http://images.google.com/search?tbm=isch&q=locandina+"+ title.replace(" ", "%20");
 		//
 		switch (menuItem.getItemId()) {
 		case R.id.cm_info:
@@ -812,7 +827,13 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
-			progDailog.dismiss();
+			try{
+				progDailog.dismiss();
+			} catch (Exception e){
+				Intent intent = getIntent();
+				finish();
+				startActivity(intent);
+			}
 			buildList();
 
 		}

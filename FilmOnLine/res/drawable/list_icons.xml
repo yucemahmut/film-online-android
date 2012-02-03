@@ -1,10 +1,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_expanded="false">
-        <bitmap android:gravity="center" android:src="@drawable/plus" />
+        <bitmap android:gravity="center" android:src="@android:drawable/radiobutton_off_background" />
     </item>
     <item android:state_expanded="true">
-        <bitmap android:gravity="center" android:src="@drawable/minus" />
+        <bitmap android:gravity="center" android:src="@android:drawable/radiobutton_on_background" />
     </item>
     <item android:drawable="@android:color/transparent" android:state_empty="true"/>
     <item android:drawable="@android:color/transparent"/>
