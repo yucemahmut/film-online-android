@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
         android:id="@+id/opt_latest"
-        android:icon="@android:drawable/ic_menu_day"
+        android:icon="@android:drawable/ic_menu_today"
         android:title="@string/opt_latest"/>
     <item
         android:id="@+id/opt_search"

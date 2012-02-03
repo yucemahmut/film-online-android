@@ -6,6 +6,6 @@
     android:paddingLeft="30sp"
     android:paddingTop="12sp"
     android:textColor="@color/darkgray"
-    android:textSize="14sp"
+    android:textSize="16sp"
     android:typeface="sans"
     android:divider="@color/lightgray" />
