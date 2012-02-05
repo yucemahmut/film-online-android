@@ -15,9 +15,10 @@
         android:layout_height="wrap_content"
         ads:adSize="BANNER"
         ads:adUnitId="a14f0647dbdca27"
-        ads:loadAdOnCreate="true"
-        android:background="@color/background" />
+        android:background="@color/background"
+        ads:loadAdOnCreate="true" />
     <!-- AdMob STOP -->
+
 
     <!-- Header title START -->
 
@@ -34,14 +35,21 @@
         android:paddingTop="5sp"
         android:textAppearance="@android:style/TextAppearance.Small"
         android:textColor="@android:color/primary_text_dark" />
-    
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+        android:layout_height="2sp"
+        android:layout_above="@id/total"
+        android:background="@color/black" />
+
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_below="@id/adView"
         android:layout_gravity="center"
-        android:background="@color/background"
-        android:layout_below="@id/adView" > 
+        android:background="@drawable/black_white_gradient" >
 
         <ImageButton
             android:id="@+id/imageButtonList"
@@ -62,36 +70,29 @@
             android:alpha="180"
             android:paddingTop="10sp"
             android:src="@android:drawable/ic_menu_today" />
-
     </LinearLayout>
 
     <!-- Header title STOP -->
-
-    <!--<View
-        android:id="@+id/divider"
-        android:layout_width="fill_parent"
-        android:layout_height="10sp"
-        android:background="@drawable/black_white_gradient" />-->
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lllist"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:paddingLeft="16sp" 
-        android:paddingRight="16sp"
-        android:paddingTop="5sp"
         android:layout_below="@id/linearLayout1"
-        android:layout_marginBottom="45dp" >
+        android:layout_marginBottom="45dp"
+        android:paddingLeft="16sp"
+        android:paddingRight="16sp"
+        android:paddingTop="5sp" >
 
         <ExpandableListView
             android:id="@+id/android:list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:cacheColorHint="@android:color/transparent"
-            android:dividerHeight="1sp"
+            android:childDivider="@android:color/transparent"
             android:divider="@color/lightgray"
-            android:childDivider="@android:color/transparent" />
+            android:dividerHeight="1sp" />
 
         <TextView
             android:id="@+id/android:empty"
