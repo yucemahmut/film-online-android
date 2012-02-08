@@ -7,7 +7,7 @@
     <string name="total">Elenco completo | Titoli presenti:</string>
     <string name="latest">Ultimi inserimenti | Titoli aggiornati:</string>
     <string name="share_subj">(Film On-Line)</string>
-    <string name="infoText_1">Questo è un indice di film completi in italiano disponibili su YouTube.\n\nTap sulla categoria per espanderla, tap sul titolo per avviare il film, pressione prolungata per visualizzare il menu.\n\n\n\n</string>
+    <string name="infoText_1">Questo è un indice di film completi in italiano disponibili su YouTube.\n\nTap sulla categoria per espanderla, tap sul titolo per avviare il film, pressione prolungata per visualizzare il menu.\n\nCREDITS:\nHanno partecipato allo sviluppo di Film OnLine:\n\nElisa Barindelli:\nIdeazione e sviluppo\n\nPaolo Casillo:\nFunzione di ricerca\n(dalla versione 1.7) e testing\n\nFilm OnLine è un progetto open source: se desiderate unirvi al team o inviare suggerimenti per migliorare, scriveteli in una mail.\n\n\n</string>
     <string name="infoButtonMail">Mail</string>
     <string name="subjectMail">Contatto da Film OnLine</string>
     <string name="infoButtonWeb">Sito Web</string>
@@ -39,16 +39,17 @@
     
     <!-- OPTIONS MENU -->
     <string name="opt_info">Film OnLine (v. 2.0)</string>
-    <string name="opt_info_text">Info e Disclaimer</string>
+    <string name="opt_info_text">Info</string>
     <string name="opt_rate_text">Vota sul market</string>
     <string name="opt_contrib_text">Partecipa anche tu</string>
     <string name="opt_disc_text">Disclaimer</string>
     <string name="opt_premium_text">Versione \'Ad Free\'</string>
-    <string name="opt_credits">Credits</string>
-    <string name="opt_credits_text">Hanno partecipato allo sviluppo di Film OnLine:\n\nElisa Barindelli:\nIdeazione e sviluppo\n\nPaolo Casillo:\nFunzione di ricerca\n(dalla versione 1.7)\n\n</string>
-    <string name="opt_contribText">Hanno partecipato allo sviluppo di Film OnLine:\n\nElisa Barindelli:\nIdeazione e sviluppo\n\nPaolo Casillo:\nFunzione di ricerca\n(dalla versione 1.7)\n\nFilm OnLine è un progetto open source: scoprite il codice sul repository e unitevi al team.\n\nOppure, se non siete sviluppatori, suggerite nuovi film, idee per migliorare e apporti di ogni genere con una mail.</string>
-    <string name="opt_contribTitle">Credits</string>
-    <string name="opt_contribBtnRep">Repository</string>
+    <string name="opt_credits">Seguici!</string>
+    <string name="opt_contribText">Film OnLine è anche su G+, Facebook e Twitter.\n\nSeguici per essere sempre aggiornato sulle ultime aggiunte!</string>
+    <string name="opt_contribTitle">Seguici!</string>
+    <string name="opt_contribBtnFb">Facebook</string>
+    <string name="opt_contribBtnTwitter">Twitter</string>
+    <string name="opt_contribBtnGplus">G+</string>
     <string name="opt_latest">Ultime aggiunte</string>
     <string name="opt_back">Indietro</string>
 
