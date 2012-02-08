@@ -61,6 +61,11 @@ public class FilmCompletiActivity extends ExpandableListActivity {
     private static final String ONLINE_LIST_URL="http://dl.dropbox.com/u/12706770/FilmGratis/list.xml";
     private static final String NEW_LIST_URL="http://dl.dropbox.com/u/12706770/FilmGratis/new.xml";
     private static final String CONTACT_MAIL="film.online.android@gmail.com";
+    private static final String INFO_WEBSITE="http://filmonlineinfo.pen.io/";
+    private static final String MARKET_LINK="market://details?id=io.pen.bluepixel.filmonline";
+    private static final String SN_GPLUS="http://goo.gl/Jhh1M";
+    private static final String SN_FACEBOOK="http://goo.gl/HhkXg";
+    private static final String SN_TWITTER="http://goo.gl/WhPWP";
     private static final String PLAYLIST_TAG=" (Playlist)";
     //
     private Document doc;
@@ -718,14 +723,14 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		    @Override
 		    public void onClick(DialogInterface dialog, int id) {
 			// Go to url
-			openUri(Uri.parse("http://filmonlineandroid.pen.io"));
+			openUri(Uri.parse(INFO_WEBSITE));
 		    }
 		});
 		builder.show();
 		return true;
 	    case R.id.opt_rate:
 		// Rate in market
-		openUri(Uri.parse("market://details?id=io.pen.bluepixel.filmonline"));
+		openUri(Uri.parse(MARKET_LINK));
 		return true;
 	    case R.id.opt_contrib:
 		// Contribute
@@ -733,22 +738,22 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		contrBuilder.setTitle(R.string.opt_contribTitle);
 		contrBuilder.setCancelable(true);
 		contrBuilder.setMessage(getText(R.string.opt_contribText));
-		contrBuilder.setPositiveButton(R.string.opt_contribBtnRep, new DialogInterface.OnClickListener() {
+		contrBuilder.setPositiveButton(R.string.opt_contribBtnGplus, new DialogInterface.OnClickListener() {
 		    @Override
 		    public void onClick(DialogInterface dialog, int id) {
-			// Go to project development page
-			openUri(Uri.parse("http://code.google.com/p/film-online-android/"));
+			openUri(Uri.parse(SN_GPLUS));
 		    }
 		});
-		contrBuilder.setNeutralButton(R.string.infoButtonMail, new DialogInterface.OnClickListener() {
+		contrBuilder.setNeutralButton(R.string.opt_contribBtnFb, new DialogInterface.OnClickListener() {
 		    @Override
 		    public void onClick(DialogInterface dialog, int id) {
-			// Send mail
-			Intent emailIntent=new Intent(android.content.Intent.ACTION_SEND);
-			emailIntent.setType("plain/text");
-			emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{CONTACT_MAIL });
-			emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getText(R.string.subjectMail));
-			startActivity(Intent.createChooser(emailIntent, getText(R.string.infoButtonMail)));
+			openUri(Uri.parse(SN_FACEBOOK));
+		    }
+		});
+		contrBuilder.setNegativeButton(R.string.opt_contribBtnTwitter, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int id) {
+			openUri(Uri.parse(SN_TWITTER));
 		    }
 		});
 		contrBuilder.show();
