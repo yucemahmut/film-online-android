@@ -3,7 +3,6 @@
 
     <string name="app_name">Film OnLine</string>
     <string name="app_desc">Indice di film completi in italiano su YouTube</string>
-    <string name="headerTitle">Tap: play | Tieni premuto: menu</string>
     <string name="total">Elenco completo | Titoli presenti:</string>
     <string name="latest">Ultimi inserimenti | Titoli aggiornati:</string>
     <string name="share_subj">(Film On-Line)</string>
@@ -12,7 +11,6 @@
     <string name="subjectMail">Contatto da Film OnLine</string>
     <string name="infoButtonWeb">Sito Web</string>
     <string name="error">Nessun titolo da visualizzare.</string>
-    <string name="icon_desc">Film OnLine icon</string>
     <string name="loadingTitle">Caricamento</string>
     <string name="loading">Lettura della lista in corso.</string>
     <string name="playlistLoading">Apertura playlist in corso.</string>
@@ -34,15 +32,11 @@
     <!-- SEARCH -->
     <string name="search">Cerca</string>
     <string name="search_total">Ricerca | Titoli trovati:</string>
-    <string name="all">Tutti</string>
     <string name="no_search">Inserire il titolo (anche parziale)</string>
     
     <!-- OPTIONS MENU -->
-    <string name="opt_info">Film OnLine (v. 2.0)</string>
     <string name="opt_info_text">Info</string>
     <string name="opt_rate_text">Vota sul market</string>
-    <string name="opt_contrib_text">Partecipa anche tu</string>
-    <string name="opt_disc_text">Disclaimer</string>
     <string name="opt_premium_text">Versione \'Ad Free\'</string>
     <string name="opt_credits">Seguici!</string>
     <string name="opt_contribText">Film OnLine è anche su G+, Facebook e Twitter.\n\nSeguici per essere sempre aggiornato sulle ultime aggiunte!</string>
