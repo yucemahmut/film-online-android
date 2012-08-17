@@ -16,7 +16,7 @@
     <string name="loading">Lettura della lista in corso.</string>
     <string name="playlistLoading">Apertura playlist in corso.</string>
     <string name="playlistError">Errore durante l\'apertura della playlist.</string>
-    <string name="disclaimer">DISCLAIMER:\nFilm OnLine raccoglie link pubblici a contenuti presenti sul web.\n\nI filmati linkati nell\'applicazione sono ospitati su server YouTube e non sono controllati dagli sviluppatori, che declinano pertanto ogni responsabilità circa il loro contenuto.\n\nPer chiedere la rimozione dall\'elenco di un link, contattare lo staff tramite il tasto sottostante, grazie.</string>
+    <string name="disclaimer">DISCLAIMER:\nFilm OnLine raccoglie link pubblici a contenuti presenti sul web.\n\nI filmati linkati nell\'applicazione sono ospitati su server YouTube e non sono controllati dagli sviluppatori, che declinano pertanto ogni responsabilità circa il loro contenuto. L’applicazione recupera le informazioni necessarie dalle piattaforme online dei fornitori di contenuti multimediali sotto delega dell’utente e pertanto lo sostituisce nel processo fisico di accesso e richiesta informazioni a tali banche dati.\n\nPer chiedere la rimozione dall\'elenco di un link, contattare lo staff tramite il tasto sottostante, grazie.</string>
     <string name="brokenSubj">Film OnLine: segnalazione link non funzionante</string>
     <string name="brokenText">Questo link non funziona: </string>
     
@@ -37,15 +37,19 @@
     
     <!-- OPTIONS MENU -->
     <string name="opt_info_text">Info</string>
-    <string name="opt_rate_text">Vota sul market</string>
     <string name="opt_premium_text">Versione \'Ad Free\'</string>
+    <string name="opt_latest">Ultime aggiunte</string>
+    <string name="opt_back">Indietro</string>
+    
+    <!--
+    :::UNUSED STRINGS::: 
     <string name="opt_credits">Seguici!</string>
-    <string name="opt_contribText">Film OnLine è anche su G+, Facebook e Twitter.\n\nSeguici per essere sempre aggiornato sulle ultime aggiunte!</string>
     <string name="opt_contribTitle">Seguici!</string>
+    <string name="opt_contribText">Film OnLine è anche su G+, Facebook e Twitter.\n\nSeguici per essere sempre aggiornato sulle ultime aggiunte!</string>
     <string name="opt_contribBtnFb">Facebook</string>
     <string name="opt_contribBtnTwitter">Twitter</string>
     <string name="opt_contribBtnGplus">G+</string>
-    <string name="opt_latest">Ultime aggiunte</string>
-    <string name="opt_back">Indietro</string>
+    <string name="opt_rate_text">Vota sul market</string>
+     -->
 
 </resources>
