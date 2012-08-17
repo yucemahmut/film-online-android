@@ -63,9 +63,6 @@ public class FilmCompletiActivity extends ExpandableListActivity {
     private static final String CONTACT_MAIL="film.online.android@gmail.com";
     private static final String INFO_WEBSITE="http://filmonlineinfo.pen.io/";
     private static final String MARKET_LINK="market://details?id=io.pen.bluepixel.filmonline";
-    private static final String SN_GPLUS="http://goo.gl/Jhh1M";
-    private static final String SN_FACEBOOK="http://goo.gl/HhkXg";
-    private static final String SN_TWITTER="http://goo.gl/WhPWP";
     private static final String PLAYLIST_TAG=" (Playlist)";
     //
     private Document doc;
@@ -78,6 +75,10 @@ public class FilmCompletiActivity extends ExpandableListActivity {
     private int tot, tot_new, tot_serach;
     private boolean onLatestFlag=false;
     private boolean onSearchFlag=false;
+
+    // private static final String SN_GPLUS="http://goo.gl/Jhh1M";
+    // private static final String SN_FACEBOOK="http://goo.gl/HhkXg";
+    // private static final String SN_TWITTER="http://goo.gl/WhPWP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -279,7 +280,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		R.layout.group_row, // Group item layout XML.
 		new String[]{"Group Item" }, // the key of group item.
 		new int[]{R.id.row_name }, // ID of each group item.-Data under the key goes into
-					   // this TextView.
+		// this TextView.
 		children, // childData describes second-level entries.
 		R.layout.child_row, // Layout for sub-level entries(second level).
 		new String[]{"Sub Item" }, // Keys in childData maps to display.
@@ -607,7 +608,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		R.layout.group_row, // Group item layout XML.
 		new String[]{"Group Item" }, // the key of group item.
 		new int[]{R.id.row_name }, // ID of each group item.-Data under the key goes into
-					   // this TextView.
+		// this TextView.
 		findFilm, // childData describes second-level entries.
 		R.layout.child_row, // Layout for sub-level entries(second level).
 		new String[]{"Sub Item" }, // Keys in childData maps to display.
@@ -728,39 +729,12 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		});
 		builder.show();
 		return true;
-	    case R.id.opt_rate:
-		// Rate in market
-		openUri(Uri.parse(MARKET_LINK));
-		return true;
-	    case R.id.opt_contrib:
-		// Contribute
-		AlertDialog.Builder contrBuilder=new AlertDialog.Builder(this);
-		contrBuilder.setTitle(R.string.opt_contribTitle);
-		contrBuilder.setCancelable(true);
-		contrBuilder.setMessage(getText(R.string.opt_contribText));
-		contrBuilder.setPositiveButton(R.string.opt_contribBtnGplus, new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int id) {
-			openUri(Uri.parse(SN_GPLUS));
-		    }
-		});
-		contrBuilder.setNeutralButton(R.string.opt_contribBtnFb, new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int id) {
-			openUri(Uri.parse(SN_FACEBOOK));
-		    }
-		});
-		contrBuilder.setNegativeButton(R.string.opt_contribBtnTwitter, new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int id) {
-			openUri(Uri.parse(SN_TWITTER));
-		    }
-		});
-		contrBuilder.show();
-		return true;
+
+		//
+
 	    case R.id.opt_premium:
 		// Get donation version
-		openUri(Uri.parse("market://details?id=io.pen.bluepixel.filmonlinedonation"));
+		openUri(Uri.parse(MARKET_LINK));
 		return true;
 	    case R.id.opt_search:
 		// Open search dialog (as if search button pressed)
@@ -790,6 +764,39 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		// creditsBuilder.show();
 		// return true;
 		//
+		// case R.id.opt_rate:
+		// // Rate in market
+		// openUri(Uri.parse(MARKET_LINK));
+		// return true;
+		// case R.id.opt_contrib:
+		// // Contribute
+		// AlertDialog.Builder contrBuilder=new AlertDialog.Builder(this);
+		// contrBuilder.setTitle(R.string.opt_contribTitle);
+		// contrBuilder.setCancelable(true);
+		// contrBuilder.setMessage(getText(R.string.opt_contribText));
+		// contrBuilder.setPositiveButton(R.string.opt_contribBtnGplus, new
+		// DialogInterface.OnClickListener() {
+		// @Override
+		// public void onClick(DialogInterface dialog, int id) {
+		// openUri(Uri.parse(SN_GPLUS));
+		// }
+		// });
+		// contrBuilder.setNeutralButton(R.string.opt_contribBtnFb, new
+		// DialogInterface.OnClickListener() {
+		// @Override
+		// public void onClick(DialogInterface dialog, int id) {
+		// openUri(Uri.parse(SN_FACEBOOK));
+		// }
+		// });
+		// contrBuilder.setNegativeButton(R.string.opt_contribBtnTwitter, new
+		// DialogInterface.OnClickListener() {
+		// @Override
+		// public void onClick(DialogInterface dialog, int id) {
+		// openUri(Uri.parse(SN_TWITTER));
+		// }
+		// });
+		// contrBuilder.show();
+		// return true;
 	    default:
 		return super.onOptionsItemSelected(item);
 	}
