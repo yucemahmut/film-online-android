@@ -1,6 +1,5 @@
 package pack.filmonline;
 
-import io.pen.bluepixel.filmonline.R;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
@@ -35,6 +34,7 @@ import android.widget.ImageButton;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import bluepixel.filmonlineitaliano.R;
 
 public class FilmCompletiActivity extends ExpandableListActivity {
 
