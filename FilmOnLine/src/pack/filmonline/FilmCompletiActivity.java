@@ -61,7 +61,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
     private static final String ONLINE_LIST_URL="http://dl.dropbox.com/u/12706770/FilmGratis/list.xml";
     private static final String NEW_LIST_URL="http://dl.dropbox.com/u/12706770/FilmGratis/new.xml";
     private static final String CONTACT_MAIL="film.online.android@gmail.com";
-    private static final String INFO_WEBSITE="https://www.facebook.com/filmonlineandroid";
+    private static final String INFO_WEBSITE="http://www.facebook.com/filmonlineandroid";
     private static final String MARKET_LINK="market://details?id=io.pen.bluepixel.filmonline";
     private static final String PLAYLIST_TAG=" (Playlist)";
     //
