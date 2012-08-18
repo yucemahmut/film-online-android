@@ -1,6 +1,5 @@
 package pack.filmonline;
 
-import io.pen.bluepixel.filmonline.R;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
@@ -32,6 +31,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import bluepixel.filmonlineitaliano.R;
 
 public class PlaylistActivity extends ListActivity {
     private static final String CONTACT_MAIL="film.online.android@gmail.com";
