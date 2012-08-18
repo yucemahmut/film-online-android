@@ -10,9 +10,6 @@
         android:layout_gravity="right"
         android:paddingBottom="12sp"
         android:paddingLeft="40sp"
-        android:paddingTop="12sp"
-        android:textColor="@color/darkgray"
-		android:typeface="sans"
-		android:textSize="16sp" />
+        android:paddingTop="12sp" />
 
 </RelativeLayout>

@@ -5,7 +5,4 @@
     android:paddingBottom="12sp"
     android:paddingLeft="30sp"
     android:paddingTop="12sp"
-    android:textColor="@color/darkgray"
-    android:textSize="16sp"
-    android:typeface="sans"
-    android:divider="@color/lightgray" />
+    android:textColor="@color/darkgray" />

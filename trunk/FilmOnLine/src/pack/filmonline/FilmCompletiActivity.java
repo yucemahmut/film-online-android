@@ -258,12 +258,12 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	ImageButton latestBtn=(ImageButton) findViewById(R.id.imageButtonLatest);
 
 	if (onLatestFlag) {
-	    latestBtn.setBackgroundColor(getResources().getColor(R.color.white));
+	    latestBtn.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 	    listBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.black_white_gradient));
 	}
 	else {
 	    latestBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.black_white_gradient));
-	    listBtn.setBackgroundColor(getResources().getColor(R.color.white));
+	    listBtn.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 	}
     }
 
