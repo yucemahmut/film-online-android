@@ -3,7 +3,6 @@
     android:id="@+id/mainLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical" >
 
@@ -28,7 +27,7 @@
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
-        android:background="@drawable/black_white_gradient"
+        android:background="@drawable/black_gradient"
         android:gravity="center|left"
         android:paddingBottom="5sp"
         android:paddingLeft="20sp"
@@ -48,8 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/adView"
-        android:layout_gravity="center"
-        android:background="@drawable/black_white_gradient" >
+        android:layout_gravity="center" >
 
         <ImageButton
             android:id="@+id/imageButtonList"
@@ -99,8 +97,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:paddingTop="12sp"
-            android:text="@string/error"
-            android:textColor="@color/darkgray" />
+            android:text="@string/error" />
     </LinearLayout>
 
 </RelativeLayout>

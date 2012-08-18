@@ -19,7 +19,7 @@
         <activity
             android:name="pack.filmonline.FilmCompletiActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar"
+            android:theme="@style/LightThemeSelector"
             android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
