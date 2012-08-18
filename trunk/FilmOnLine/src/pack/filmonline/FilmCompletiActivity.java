@@ -61,7 +61,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
     private static final String ONLINE_LIST_URL="http://dl.dropbox.com/u/12706770/FilmGratis/list.xml";
     private static final String NEW_LIST_URL="http://dl.dropbox.com/u/12706770/FilmGratis/new.xml";
     private static final String CONTACT_MAIL="film.online.android@gmail.com";
-    private static final String INFO_WEBSITE="http://filmonlineinfo.pen.io/";
+    private static final String INFO_WEBSITE="https://www.facebook.com/filmonlineandroid";
     private static final String MARKET_LINK="market://details?id=io.pen.bluepixel.filmonline";
     private static final String PLAYLIST_TAG=" (Playlist)";
     //
@@ -206,8 +206,19 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	    setButtonColors();
 	}
 	else {
-	    finish();
+	    confirmQuit();
 	}
+    }
+
+    private void confirmQuit() {
+	new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle(R.string.quit_title)
+	    .setMessage(R.string.quit_msg)
+	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+		    finish();
+		}
+	    }).setNegativeButton(android.R.string.no, null).show();
     }
 
     private void getBundle(Bundle savedInstanceState) {
