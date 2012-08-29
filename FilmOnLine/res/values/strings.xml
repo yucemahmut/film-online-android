@@ -2,59 +2,48 @@
 <resources>
 
     <string name="app_name">Film OnLine</string>
-    <string name="app_desc">Indice di film completi in italiano su YouTube</string>
-    <string name="total">Elenco completo | Titoli presenti:</string>
-    <string name="latest">Ultimi inserimenti | Titoli aggiornati:</string>
+    <string name="app_desc">A list of free movies streaming from the web</string>
+    <string name="total">Full list | Total:</string>
+    <string name="latest">Recently added | Total:</string>
     <string name="share_subj">(Film On-Line)</string>
-    <string name="infoText_1">Questo è un indice di film completi in italiano disponibili su YouTube.\n\nTap sulla categoria per espanderla, tap sul titolo per avviare il film, pressione prolungata per visualizzare il menu.\n\nPer rimuovere la pubblicità, selezionare \'Versione Ad-Free\' dal menu\n\nPer aiutarci a crescere, votaci sul market.\n\nCREDITS:\nHanno partecipato allo sviluppo di Film OnLine:\n\nBlue Pixel:\nIdeazione e sviluppo\n\nPaolo Casillo:\nFunzione di ricerca\n(dalla versione 1.7) e testing\n\nFilm OnLine è un progetto in continuo sviluppo: se desiderate unirvi al team o inviare suggerimenti per migliorare, scriveteli in una mail.\n\n\n</string>
+    <string name="infoText_1">This is a list of free movies streaming from the web.\n\nTap on categories to expand, tap on titles to start the movie, long press a title to show context menu.\n\nTo get rid of ads, choose \'Ad-Free Version\' in the menu\n\nTo help us make this app known, please rate it on the market\n\nCREDITS:\nFilm OnLine has been developed by:\n\nBlue Pixel:\nProject and realization\n\nPaolo Casillo:\nMovie search (since version 1.7) and testing\n\nFilm OnLine is in continuous development: if you wish to join the team or send your suggestions, write us a mail.\n\n\n</string>
     <string name="infoButtonMail">Mail</string>
-    <string name="subjectMail">Contatto da Film OnLine</string>
-    <string name="infoButtonRate">Vota</string>
-    <string name="infoButtonWeb">Sito Web</string>
-    <string name="error">Nessun titolo da visualizzare.</string>
-    <string name="empty_playlist">Spiacenti, la playlist risulta vuota.</string>
-    <string name="loadingTitle">Caricamento</string>
-    <string name="loading">Lettura della lista in corso.</string>
-    <string name="playlistLoading">Apertura playlist in corso.</string>
-    <string name="playlistError">Errore durante l\'apertura della playlist.</string>
-    <string name="disclaimer">DISCLAIMER:\nFilm OnLine raccoglie link pubblici a contenuti presenti sul web.\n\nI filmati linkati nell\'applicazione sono ospitati su server YouTube e non sono controllati dagli sviluppatori, che declinano pertanto ogni responsabilità circa il loro contenuto. L’applicazione recupera le informazioni necessarie dalle piattaforme online dei fornitori di contenuti multimediali sotto delega dell’utente e pertanto lo sostituisce nel processo fisico di accesso e richiesta informazioni a tali banche dati.\n\nPer chiedere la rimozione dall\'elenco di un link, contattare lo staff tramite il tasto sottostante, grazie.</string>
-    <string name="brokenSubj">Film OnLine: segnalazione link non funzionante</string>
-    <string name="brokenText">Questo link non funziona: </string>
+    <string name="infoButtonWeb">Web Site</string>
+    <string name="infoButtonRate">Rate</string>
+    <string name="subjectMail">Contact from Film OnLine</string>
+    <string name="error">Nothing to display.</string>
+    <string name="empty_playlist">Sorry, the playlist is empty.</string>
+    <string name="loadingTitle">Loading</string> 
+    <string name="loading">Reading the movie list, please wait.</string>
+    <string name="playlistLoading">Opening the playlist.</string>
+    <string name="playlistError">Error opening the playlist.</string>
+    <string name="disclaimer">DISCLAIMER:\nFilm OnLine collects public links to web contents. All the linked movies are hosted on third parties servers, can be reached by everyone and are not under the responsibility of the developers. To request the removal of a content, please send a mail. Thanks.</string>
+    <string name="brokenSubj">Film OnLine: broken link</string>
+    <string name="brokenText">This link is broken: </string>
     
     <!-- CONTEXT MENU -->
     <string name="cm_wiki">Wikipedia</string>
     <string name="cm_info">IMdb</string>
     <string name="cm_play">Play</string>
-    <string name="cm_playlist">Apri Playlist</string>
-    <string name="cm_playbill">Cerca Locandina</string>
-    <string name="cm_triler">Cerca Trailer</string>
-    <string name="cm_share">Condividi</string>
-    <string name="cm_broken">Segnala link non valido</string>
+    <string name="cm_playlist">Open Playlist</string>
+    <string name="cm_playbill">Find Playbill</string>
+    <string name="cm_triler">Find Trailer</string>
+    <string name="cm_share">Share</string>
+    <string name="cm_broken">Report broken link</string>
     
     <!-- SEARCH -->
-    <string name="search">Cerca</string>
-    <string name="search_total">Ricerca | Titoli trovati:</string>
-    <string name="no_search">Inserire il titolo (anche parziale)</string>
+    <string name="search">Search</string>
+    <string name="search_total">Search | Results found:</string>
+    <string name="no_search">Insert movie title (or part of it)</string>
     
     <!-- OPTIONS MENU -->
     <string name="opt_info_text">Info</string>
-    <string name="opt_premium_text">Versione \'Ad Free\'</string>
-    <string name="opt_latest">Ultime aggiunte</string>
-    <string name="opt_back">Indietro</string>
+    <string name="opt_premium_text">\'Ad Free\' version</string>
+    <string name="opt_latest">Recently added</string>
+    <string name="opt_back">Back</string>
     
     <!-- QUIT -->
-    <string name="quit_title">Esci</string>
-    <string name="quit_msg">Sicuro di voler uscire?</string>
-    
-    <!--
-    :::UNUSED STRINGS::: 
-    <string name="opt_credits">Seguici!</string>
-    <string name="opt_contribTitle">Seguici!</string>
-    <string name="opt_contribText">Film OnLine è anche su G+, Facebook e Twitter.\n\nSeguici per essere sempre aggiornato sulle ultime aggiunte!</string>
-    <string name="opt_contribBtnFb">Facebook</string>
-    <string name="opt_contribBtnTwitter">Twitter</string>
-    <string name="opt_contribBtnGplus">G+</string>
-    <string name="opt_rate_text">Vota sul market</string>
-     -->
+    <string name="quit_title">Exit</string>
+    <string name="quit_msg">Do you really want to leave?</string>
 
 </resources>
