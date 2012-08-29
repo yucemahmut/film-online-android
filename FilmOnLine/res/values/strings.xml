@@ -8,9 +8,9 @@
     <string name="share_subj">(Film On-Line)</string>
     <string name="infoText_1">Questo è un indice di film completi in italiano disponibili su YouTube.\n\nTap sulla categoria per espanderla, tap sul titolo per avviare il film, pressione prolungata per visualizzare il menu.\n\nPer rimuovere la pubblicità, selezionare \'Versione Ad-Free\' dal menu\n\nPer aiutarci a crescere, votaci sul market.\n\nCREDITS:\nHanno partecipato allo sviluppo di Film OnLine:\n\nBlue Pixel:\nIdeazione e sviluppo\n\nPaolo Casillo:\nFunzione di ricerca\n(dalla versione 1.7) e testing\n\nFilm OnLine è un progetto in continuo sviluppo: se desiderate unirvi al team o inviare suggerimenti per migliorare, scriveteli in una mail.\n\n\n</string>
     <string name="infoButtonMail">Mail</string>
-    <string name="infoButtonWeb">Sito Web</string>
-    <string name="infoButtonRate">Vota</string>
     <string name="subjectMail">Contatto da Film OnLine</string>
+    <string name="infoButtonRate">Vota</string>
+    <string name="infoButtonWeb">Sito Web</string>
     <string name="error">Nessun titolo da visualizzare.</string>
     <string name="empty_playlist">Spiacenti, la playlist risulta vuota.</string>
     <string name="loadingTitle">Caricamento</string>
