@@ -62,7 +62,8 @@ public class FilmCompletiActivity extends ExpandableListActivity {
     private static final String NEW_LIST_URL="http://dl.dropbox.com/u/12706770/FilmGratis/new.xml";
     private static final String CONTACT_MAIL="film.online.android@gmail.com";
     private static final String INFO_WEBSITE="http://www.facebook.com/filmonlineandroid";
-    private static final String MARKET_LINK="market://details?id=io.pen.bluepixel.filmonline";
+    private static final String MARKET_LINK="market://details?id=io.pen.bluepixel.filmonlinedonation";
+    private static final String RATE_LINK="market://details?id=bluepixel.filmonlineitaliano";
     private static final String PLAYLIST_TAG=" (Playlist)";
     //
     private Document doc;
@@ -736,6 +737,13 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		    public void onClick(DialogInterface dialog, int id) {
 			// Go to url
 			openUri(Uri.parse(INFO_WEBSITE));
+		    }
+		});
+		builder.setNegativeButton(R.string.infoButtonRate, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int id) {
+			// Go to url
+			openUri(Uri.parse(RATE_LINK));
 		    }
 		});
 		builder.show();
