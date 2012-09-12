@@ -63,6 +63,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
     private static final String CONTACT_MAIL="film.online.android@gmail.com";
     private static final String INFO_WEBSITE="http://www.facebook.com/filmonlineandroid";
     private static final String MARKET_LINK="market://details?id=io.pen.bluepixel.filmonlinedonation";
+    private static final String MARKET_LINK_CARTONI="market://details?id=bluepixel.cartonionline";
     private static final String RATE_LINK="market://details?id=bluepixel.filmonlineitaliano";
     private static final String PLAYLIST_TAG=" (Playlist)";
     //
@@ -759,19 +760,24 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		// Open search dialog (as if search button pressed)
 		onSearchRequested();
 		return true;
-	    case R.id.opt_latest:
-		// Open "recently added" tab
-		onSearchFlag=false;
-		onLatestFlag=true;
-		setButtonColors();
-		if ((groupList == null) | (childrenList == null) | (groupListNew == null) | (childrenListNew == null)) {
-		    // If the movie list need to be initialized, do it here.
-		    loadList();
-		}
-		else {
-		    buildList();
-		}
+	    case R.id.opt_cartoni:
+		// Get Cartoni OnLine
+		openUri(Uri.parse(MARKET_LINK_CARTONI));
 		return true;
+		// case R.id.opt_latest:
+		// // Open "recently added" tab
+		// onSearchFlag=false;
+		// onLatestFlag=true;
+		// setButtonColors();
+		// if ((groupList == null) | (childrenList == null) | (groupListNew == null) |
+		// (childrenListNew == null)) {
+		// // If the movie list need to be initialized, do it here.
+		// loadList();
+		// }
+		// else {
+		// buildList();
+		// }
+		// return true;
 		//
 		// case R.id.opt_credits:
 		// //Show credits
