@@ -1,9 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item
+    <!-- <item
         android:id="@+id/opt_latest"
         android:icon="@android:drawable/ic_menu_today"
-        android:title="@string/opt_latest"/>
+        android:title="@string/opt_latest"/> -->
+
     <item
         android:id="@+id/opt_search"
         android:icon="@android:drawable/ic_menu_search"
@@ -14,8 +15,12 @@
         android:title="@string/opt_info_text"/>
     <item
         android:id="@+id/opt_premium"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@android:drawable/ic_menu_upload"
         android:title="@string/opt_premium_text"/>
+    <item
+        android:id="@+id/opt_cartoni"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/opt_cartoni_text"/>
     
     <!--<item
         android:id="@+id/opt_contrib"
