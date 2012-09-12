@@ -38,6 +38,7 @@
     
     <!-- OPTIONS MENU -->
     <string name="opt_info_text">Info</string>
+    <string name="opt_cartoni_text">Cartoni OnLine</string>
     <string name="opt_premium_text">Versione \'Ad Free\'</string>
     <string name="opt_latest">Ultime aggiunte</string>
     <string name="opt_back">Indietro</string>
