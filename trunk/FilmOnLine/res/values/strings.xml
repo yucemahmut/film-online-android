@@ -6,9 +6,8 @@
     <string name="total">Elenco completo | Titoli presenti:</string>
     <string name="latest">Ultimi inserimenti | Titoli aggiornati:</string>
     <string name="share_subj">(Film On-Line)</string>
-    <string name="infoText_1">Questo è un indice di film completi in italiano disponibili su YouTube.\n\nTap sulla categoria per espanderla, tap sul titolo per avviare il film, pressione prolungata per visualizzare il menu.\n\nPer rimuovere la pubblicità, selezionare \'Versione Ad-Free\' dal menu\n\nPer aiutarci a crescere, votaci sul market.\n\nCREDITS:\nHanno partecipato allo sviluppo di Film OnLine:\n\nBlue Pixel:\nIdeazione e sviluppo\n\nPaolo Casillo:\nFunzione di ricerca\n(dalla versione 1.7) e testing\n\nFilm OnLine è un progetto in continuo sviluppo: se desiderate unirvi al team o inviare suggerimenti per migliorare, scriveteli in una mail.\n\n\n</string>
-    <string name="infoButtonMail">Mail</string>
-    <string name="subjectMail">Contatto da Film OnLine</string>
+    <string name="infoText_1">Questo è un indice di film completi in italiano disponibili su YouTube.\n\nTap sulla categoria per espanderla, tap sul titolo per avviare il film, pressione prolungata per visualizzare il menu.\n\nPer rimuovere la pubblicità, acquista la \'Versione Ad-Free\'\n\nPer aiutarci a crescere, votaci sul market.\n\nCREDITS:\nHanno partecipato allo sviluppo di Film OnLine:\n\nBlue Pixel:\nIdeazione e sviluppo\n\nPaolo Casillo:\nFunzione di ricerca\n(dalla versione 1.7) e testing\n\nFilm OnLine è un progetto in continuo sviluppo: se desiderate unirvi al team o inviare suggerimenti per migliorare, scriveteli in una mail.\n\n\n</string>
+    <string name="infoButtonAdFree">Ad-Free</string>
     <string name="infoButtonRate">Vota</string>
     <string name="infoButtonWeb">Sito Web</string>
     <string name="error">Nessun titolo da visualizzare.</string>
@@ -17,7 +16,7 @@
     <string name="loading">Lettura della lista in corso.</string>
     <string name="playlistLoading">Apertura playlist in corso.</string>
     <string name="playlistError">Errore durante l\'apertura della playlist.</string>
-    <string name="disclaimer">DISCLAIMER:\nFilm OnLine raccoglie link pubblici a contenuti presenti sul web.\n\nI filmati linkati nell\'applicazione sono ospitati su server YouTube e non sono controllati dagli sviluppatori, che declinano pertanto ogni responsabilità circa il loro contenuto. L’applicazione recupera le informazioni necessarie dalle piattaforme online dei fornitori di contenuti multimediali sotto delega dell’utente e pertanto lo sostituisce nel processo fisico di accesso e richiesta informazioni a tali banche dati.\n\nPer chiedere la rimozione dall\'elenco di un link, contattare lo staff tramite il tasto sottostante, grazie.</string>
+    <string name="disclaimer">DISCLAIMER:\nFilm OnLine raccoglie link pubblici a contenuti presenti sul web.\n\nI filmati linkati nell\'applicazione sono ospitati su server YouTube e non sono controllati dagli sviluppatori, che declinano pertanto ogni responsabilità circa il loro contenuto. L’applicazione recupera le informazioni necessarie dalle piattaforme online dei fornitori di contenuti multimediali sotto delega dell’utente e pertanto lo sostituisce nel processo fisico di accesso e richiesta informazioni a tali banche dati.\n\nPer chiedere la rimozione dall\'elenco di un link, contattare lo staff su film.online.android@gmail.com.</string>
     <string name="brokenSubj">Film OnLine: segnalazione link non funzionante</string>
     <string name="brokenText">Questo link non funziona: </string>
     
@@ -30,7 +29,7 @@
     <string name="cm_triler">Cerca Trailer</string>
     <string name="cm_share">Condividi</string>
     <string name="cm_broken">Segnala link non valido</string>
-    
+     
     <!-- SEARCH -->
     <string name="search">Cerca</string>
     <string name="search_total">Ricerca | Titoli trovati:</string>
@@ -39,23 +38,41 @@
     <!-- OPTIONS MENU -->
     <string name="opt_info_text">Info</string>
     <string name="opt_cartoni_text">Cartoni OnLine</string>
-    <string name="opt_premium_text">Versione \'Ad Free\'</string>
-    <string name="opt_latest">Ultime aggiunte</string>
     <string name="opt_back">Indietro</string>
+    <string name="opt_settings_text">Impostazioni</string>
     
     <!-- QUIT -->
     <string name="quit_title">Esci</string>
     <string name="quit_msg">Sicuro di voler uscire?</string>
     
+    <!-- NOTIFICATIONS -->
+    <string name="update_group">Aggiornamenti</string>
+    <string name="perform_updates_text">Mostra notifica</string>
+    <string name="perform_updates_subtext">Mostra un avviso nella barra di stato se vengono aggiunti nuovi film all\'elenco</string>
+    <string name="details_group">Impostazioni</string>
+    <string name="after_text">Intervallo</string>
+    <string name="after_subtext">Definisce dopo quanto tempo dall\'ultimo accesso eseguire il controllo</string>
+    <string name="frequency_text">Frequenza</string>
+    <string name="frequency_subtext">Definisce ogni quanto ripetere il controllo</string>
+    <string name="time_text">Orario</string>
+    <string name="time_subtext">Definisce la fascia oraria in cui eseguire il controllo</string>
+    <string name="notify_updates">Film OnLine</string>
+    <string name="notify_updates_details">Nuovi titoli aggiunti al database</string>
+    
     <!--
     :::UNUSED STRINGS::: 
     <string name="opt_credits">Seguici!</string>
+    <string name="opt_rate_text">Vota</string>
+    <string name="opt_premium_text">Versione \'Ad Free\'</string>
+    <string name="opt_latest">Ultime aggiunte</string>
     <string name="opt_contribTitle">Seguici!</string>
     <string name="opt_contribText">Film OnLine è anche su G+, Facebook e Twitter.\n\nSeguici per essere sempre aggiornato sulle ultime aggiunte!</string>
     <string name="opt_contribBtnFb">Facebook</string>
     <string name="opt_contribBtnTwitter">Twitter</string>
     <string name="opt_contribBtnGplus">G+</string>
     <string name="opt_rate_text">Vota sul market</string>
+    <string name="infoButtonMail">Mail</string>
+    <string name="subjectMail">Contatto da Film OnLine</string>
      -->
 
 </resources>

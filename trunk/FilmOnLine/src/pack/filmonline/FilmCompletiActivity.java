@@ -3,24 +3,32 @@ package pack.filmonline;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+import java.util.TimeZone;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.ExpandableListActivity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -58,14 +66,20 @@ public class FilmCompletiActivity extends ExpandableListActivity {
     public static final int RESULTCODE_OK=1;
     public static final int RESULTCODE_KO=2;
     //
+    public static final String PREFS_FILM_ONLINE="FilmOnLinePrefs";
+    public static final String PREFS_NEWEST_LIST_NAME="FilmOnLineNewestList";
+    private static final String PREFS_PERFORM_UPDAES="perform_updates";
+    private static final String PREFS_UPDATE_INTERVAL="update_interval";
+    private static final String PREFS_AFTER_INTERVAL="update_after";
+    private static final String PREFS_TIME="time";
+    //
+    public static final String PLAYLIST_TAG=" (Playlist)";
+    public static final String NEW_LIST_URL="http://dl.dropbox.com/u/12706770/FilmGratis/new.xml";
     private static final String ONLINE_LIST_URL="http://dl.dropbox.com/u/12706770/FilmGratis/list.xml";
-    private static final String NEW_LIST_URL="http://dl.dropbox.com/u/12706770/FilmGratis/new.xml";
-    private static final String CONTACT_MAIL="film.online.android@gmail.com";
-    private static final String INFO_WEBSITE="http://www.facebook.com/filmonlineandroid";
+    private static final String INFO_WEBSITE="http://www.facebook.com/filmonlineitaliano";
     private static final String MARKET_LINK="market://details?id=io.pen.bluepixel.filmonlinedonation";
     private static final String MARKET_LINK_CARTONI="market://details?id=bluepixel.cartonionline";
     private static final String RATE_LINK="market://details?id=bluepixel.filmonlineitaliano";
-    private static final String PLAYLIST_TAG=" (Playlist)";
     //
     private Document doc;
     private SimpleExpandableListAdapter expListAdapter;
@@ -78,6 +92,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
     private boolean onLatestFlag=false;
     private boolean onSearchFlag=false;
 
+    // private static final String CONTACT_MAIL="film.online.android@gmail.com";
     // private static final String SN_GPLUS="http://goo.gl/Jhh1M";
     // private static final String SN_FACEBOOK="http://goo.gl/HhkXg";
     // private static final String SN_TWITTER="http://goo.gl/WhPWP";
@@ -86,6 +101,13 @@ public class FilmCompletiActivity extends ExpandableListActivity {
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.main);
+	try {
+	    // If the activity has been called, try to get the Intent.
+	    onLatestFlag=getIntent().getExtras().getBoolean(checkNewest.NEWEST_TAG);
+	}
+	catch (Exception e) {
+	    // No problem, carry on
+	}
 	try {
 	    // If the movie list has been already read, don't reload it.
 	    getBundle(savedInstanceState);
@@ -140,6 +162,12 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	    }
 	});
 	setButtonColors();
+
+	// Remove notification (if any)
+	NotificationManager nm=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+	nm.cancel(checkNewest.FO_NOTIFICATION_ID);
+	// Remove scheduled check (if any)
+	cancelRecurringAlarm(getApplicationContext());
     }
 
     @Override
@@ -196,6 +224,20 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	    else {
 		buildList();
 	    }
+	}
+    }
+
+    @Override
+    protected void onPause() {
+	super.onPause();
+	// Set the alarm to check for updates
+	// (if set in preferences)
+	SharedPreferences set=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+	if (set.getBoolean(PREFS_PERFORM_UPDAES, false)) {
+	    setRecurringAlarm(getApplicationContext());
+	}
+	else {
+	    cancelRecurringAlarm(getApplicationContext());
 	}
     }
 
@@ -394,6 +436,14 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	}
 	if (newestFlag) {
 	    childrenListNew=resultC;
+
+	    // Save the newest list for scheduled checks
+	    String newestString="";
+	    newestString+=childrenListNew.toString();
+	    SharedPreferences settings=getSharedPreferences(PREFS_FILM_ONLINE, 0);
+	    SharedPreferences.Editor editor=settings.edit();
+	    editor.putString(PREFS_NEWEST_LIST_NAME, newestString);
+	    editor.commit();
 	}
 	else {
 	    childrenList=resultC;
@@ -722,15 +772,11 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		builder.setTitle(R.string.app_name);
 		builder.setCancelable(true);
 		builder.setMessage(getText(R.string.infoText_1) + "" + getText(R.string.disclaimer));
-		builder.setPositiveButton(R.string.infoButtonMail, new DialogInterface.OnClickListener() {
+		builder.setPositiveButton(R.string.infoButtonAdFree, new DialogInterface.OnClickListener() {
 		    @Override
 		    public void onClick(DialogInterface dialog, int id) {
-			// Send mail
-			Intent emailIntent=new Intent(android.content.Intent.ACTION_SEND);
-			emailIntent.setType("plain/text");
-			emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{CONTACT_MAIL });
-			emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getText(R.string.subjectMail));
-			startActivity(Intent.createChooser(emailIntent, getText(R.string.infoButtonMail)));
+			// Get donation version
+			openUri(Uri.parse(MARKET_LINK));
 		    }
 		});
 		builder.setNeutralButton(R.string.infoButtonWeb, new DialogInterface.OnClickListener() {
@@ -748,13 +794,21 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		    }
 		});
 		builder.show();
-		return true;
-
-		//
-
-	    case R.id.opt_premium:
-		// Get donation version
-		openUri(Uri.parse(MARKET_LINK));
+		// builder.setPositiveButton(R.string.infoButtonMail, new
+		// DialogInterface.OnClickListener() {
+		// @Override
+		// public void onClick(DialogInterface dialog, int id) {
+		// // Send mail
+		// Intent emailIntent=new Intent(android.content.Intent.ACTION_SEND);
+		// emailIntent.setType("plain/text");
+		// emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new
+		// String[]{CONTACT_MAIL });
+		// emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+		// getText(R.string.subjectMail));
+		// startActivity(Intent.createChooser(emailIntent,
+		// getText(R.string.infoButtonMail)));
+		// }
+		// });
 		return true;
 	    case R.id.opt_search:
 		// Open search dialog (as if search button pressed)
@@ -764,6 +818,19 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		// Get Cartoni OnLine
 		openUri(Uri.parse(MARKET_LINK_CARTONI));
 		return true;
+	    case R.id.opt_settings:
+		// Go to settings page
+		Intent intent=new Intent(getBaseContext(), SettingsActivity.class);
+		startActivity(intent);
+		return true;
+		// case R.id.opt_premium:
+		// // Get donation version
+		// openUri(Uri.parse(MARKET_LINK));
+		// return true;
+		// case R.id.opt_rate:
+		// // Rate in market
+		// openUri(Uri.parse(RATE_LINK));
+		// return true;
 		// case R.id.opt_latest:
 		// // Open "recently added" tab
 		// onSearchFlag=false;
@@ -832,6 +899,44 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	progDailog.setIndeterminate(true);
 	initTask=new InitTask();
 	initTask.execute(this);
+    }
+
+    private void setRecurringAlarm(Context context, boolean deactivate) {
+	// Create alarm
+	Intent checker=new Intent(context, AlarmReceiver.class);
+	PendingIntent recurringUpdate=PendingIntent
+	    .getBroadcast(context, 0, checker, PendingIntent.FLAG_CANCEL_CURRENT);
+	AlarmManager alarms=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+	if (deactivate) {
+	    alarms.cancel(recurringUpdate);
+	}
+	else {
+	    Calendar updateTime=Calendar.getInstance();
+	    updateTime.setTimeZone(TimeZone.getDefault());
+
+	    // Get preferences
+	    SharedPreferences settings=PreferenceManager.getDefaultSharedPreferences(this);
+	    int afterInterval=Integer.parseInt(settings.getString(PREFS_AFTER_INTERVAL, "2"));
+	    int hour=Integer.parseInt(settings.getString(PREFS_TIME, "20"));
+
+	    // Set an alarm
+	    Random rdmGen=new Random();
+	    updateTime.add(Calendar.DATE, afterInterval);
+	    updateTime.set(Calendar.MINUTE, rdmGen.nextInt(59));
+	    updateTime.set(Calendar.HOUR_OF_DAY, hour);
+	    int updateInterval=Integer.parseInt(settings.getString(PREFS_UPDATE_INTERVAL, "2"));
+	    long updIntMills=updateInterval * 24 * 60 * 60 * 1000; // convert from days to mills
+	    alarms.setRepeating(AlarmManager.RTC, updateTime.getTimeInMillis(), updIntMills, recurringUpdate);
+	}
+    }
+
+    private void setRecurringAlarm(Context context) {
+	setRecurringAlarm(context, false);
+    }
+
+    private void cancelRecurringAlarm(Context context) {
+	setRecurringAlarm(context, true);
     }
 
     protected class InitTask extends AsyncTask<Context, Integer, String> {
