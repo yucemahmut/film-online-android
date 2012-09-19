@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+	<string-array name="updateInterval">
+		<item>Ogni giorno</item>
+		<item>Ogni due giorni</item>
+		<item>Ogni settimana</item>
+		<item>Ogni due settimane</item>
+		<item>Ogni mese</item>
+	</string-array>
+	
+	<string-array name="updateIntervalValues">
+		<item>1</item>
+		<item>2</item>
+		<item>7</item>
+		<item>14</item>
+		<item>30</item>
+	</string-array>
+	
+	<string-array name="afterInterval">
+		<item>Un giorno</item>
+		<item>Due giorni</item>
+		<item>Una settimana</item>
+		<item>Due settimane</item>
+		<item>Un mese</item>
+	</string-array>
+	
+	<string-array name="afterIntervalValues">
+		<item>1</item>
+		<item>2</item>
+		<item>7</item>
+		<item>14</item>
+		<item>30</item>
+	</string-array>
+	
+	<string-array name="time">
+		<item>Mattino</item>
+		<item>Pomeriggio</item>
+		<item>Sera</item>
+		<item>Notte</item>
+	</string-array>
+	
+	<string-array name="timeValues">
+		<item>9</item>
+		<item>15</item>
+		<item>20</item>
+		<item>1</item>
+	</string-array>
+
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <PreferenceCategory 
+        android:title="@string/update_group"
+        android:key="update_category">
+
+	<CheckBoxPreference android:key="perform_updates"
+		android:summary="@string/perform_updates_subtext"
+		android:defaultValue="true" 
+		android:title="@string/perform_updates_text" />
+  </PreferenceCategory>
+
+  <PreferenceCategory 
+        android:title="@string/details_group"
+        android:key="details_category">
+		
+	<ListPreference android:key="update_after"
+		android:title="@string/after_text" 
+		android:summary="@string/after_subtext"
+		android:defaultValue="2" 
+		android:entries="@array/afterInterval"
+		android:entryValues="@array/afterIntervalValues" 
+		android:dependency="perform_updates" />
+		
+	<ListPreference android:key="update_interval"
+		android:title="@string/frequency_text" 
+		android:summary="@string/frequency_subtext"
+		android:defaultValue="2" 
+		android:entries="@array/updateInterval"
+		android:entryValues="@array/updateIntervalValues" 
+		android:dependency="perform_updates" />
+		
+	<ListPreference android:key="time"
+		android:title="@string/time_text" 
+		android:summary="@string/time_subtext"
+		android:defaultValue="20" 
+		android:entries="@array/time"
+		android:entryValues="@array/timeValues" 
+		android:dependency="perform_updates" />
+  </PreferenceCategory>
+</PreferenceScreen>
