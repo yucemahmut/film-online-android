@@ -769,7 +769,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	    case R.id.opt_info:
 		// Info
 		AlertDialog.Builder builder=new AlertDialog.Builder(this);
-		builder.setTitle(R.string.app_name);
+		builder.setTitle(R.string.infoTitle);
 		builder.setCancelable(true);
 		builder.setMessage(getText(R.string.infoText_1) + "" + getText(R.string.disclaimer));
 		builder.setPositiveButton(R.string.infoButtonAdFree, new DialogInterface.OnClickListener() {
