@@ -51,12 +51,12 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	@Override
 	protected String doInBackground(Context... params) {
 	    tot=initialize(ONLINE_LIST_URL, true);
-	    if (tot!=0) {
+	    if (tot != 0) {
 		createGroupList(false);
 		createChildList(false);
 	    }
 	    tot_new=initialize(NEW_LIST_URL, true);
-	    if (tot_new!=0) {
+	    if (tot_new != 0) {
 		createGroupList(true);
 		createChildList(true);
 	    }
@@ -125,8 +125,8 @@ public class FilmCompletiActivity extends ExpandableListActivity {
     public static final String PLAYLIST_TAG=" (Playlist)";
     public static final String NEW_LIST_URL="http://dl.dropbox.com/u/12706770/FilmGratis/new.xml";
     private static final String ONLINE_LIST_URL="http://dl.dropbox.com/u/12706770/FilmGratis/list.xml";
-    public static final String NEW_LIST_URL_BACKUP="http://dl.dropbox.com/u/12706770/FilmGratis/new.xml";
-    private static final String ONLINE_LIST_URL_BACKUP="http://dl.dropbox.com/u/12706770/FilmGratis/list.xml";
+    public static final String NEW_LIST_URL_BACKUP="https://www.box.com/s/ha75jef57ejff1h20ffn";
+    private static final String ONLINE_LIST_URL_BACKUP="https://www.box.com/s/oeh2a8jvcjlmob49xfy4";
     private static final String INFO_WEBSITE="http://www.facebook.com/filmonlineitaliano";
     private static final String MARKET_LINK="market://details?id=io.pen.bluepixel.filmonlinedonation";
     private static final String MARKET_LINK_CARTONI="market://details?id=bluepixel.cartonionline";
@@ -154,17 +154,17 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	TextView total=(TextView) findViewById(R.id.total);
 	List children, group;
 	if (onLatestFlag) {
-	    total.setText(""+getText(R.string.latest)+" "+tot_new);
+	    total.setText("" + getText(R.string.latest) + " " + tot_new);
 	    children=childrenListNew;
 	    group=groupListNew;
 	}
 	else if (onSearchFlag) {
-	    total.setText(""+getText(R.string.search_total)+" "+tot_serach);
+	    total.setText("" + getText(R.string.search_total) + " " + tot_serach);
 	    children=childrenListSearch;
 	    group=groupListSearch;
 	}
 	else {
-	    total.setText(""+getText(R.string.total)+" "+tot);
+	    total.setText("" + getText(R.string.total) + " " + tot);
 	    children=childrenList;
 	    group=groupList;
 	}
@@ -187,14 +187,14 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	registerForContextMenu(getExpandableListView());
 	// Collapse all list groups
 	try {
-	    if (!onLatestFlag) {
-		for (int i=1; i<=expListAdapter.getGroupCount(); i++) {
-		    getExpandableListView().collapseGroup(i-1);
+	    if ( ! onLatestFlag) {
+		for (int i=1; i <= expListAdapter.getGroupCount(); i++) {
+		    getExpandableListView().collapseGroup(i - 1);
 		}
 	    }
 	    else {
-		for (int i=1; i<=expListAdapter.getGroupCount(); i++) {
-		    getExpandableListView().expandGroup(i-1);
+		for (int i=1; i <= expListAdapter.getGroupCount(); i++) {
+		    getExpandableListView().expandGroup(i - 1);
 		}
 	    }
 	}
@@ -224,26 +224,26 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	NodeList catList=doc.getElementsByTagName("category");
 
 	// "category" node iteration
-	for (int i=0; i<catList.getLength(); ++i) {
+	for (int i=0; i < catList.getLength(); ++i) {
 	    NodeList filmList=((Element) catList.item(i)).getChildNodes();
 	    ArrayList secList=new ArrayList();
 
 	    // "film" nodes iteration
-	    for (int n=0; n<filmList.getLength(); n++) {
+	    for (int n=0; n < filmList.getLength(); n++) {
 		List<String> film=new ArrayList<String>();
 		// populate childrenList
 		String title=((Element) filmList.item(n)).getAttribute("id");
 		// add "Playlist" tag if needed
-		if (!((Element) filmList.item(n)).getAttribute("list").equals("")) {
-		    title=title+PLAYLIST_TAG;
+		if ( ! ((Element) filmList.item(n)).getAttribute("list").equals("")) {
+		    title=title + PLAYLIST_TAG;
 		}
 		HashMap child=new HashMap();
 		child.put("Sub Item", title);
 		secList.add(child);
 		// populate globalList
-		film.add(""+((Element) filmList.item(n)).getAttribute("id"));
-		film.add(""+((Element) filmList.item(n)).getAttribute("v"));
-		film.add(""+((Element) filmList.item(n)).getAttribute("list"));
+		film.add("" + ((Element) filmList.item(n)).getAttribute("id"));
+		film.add("" + ((Element) filmList.item(n)).getAttribute("v"));
+		film.add("" + ((Element) filmList.item(n)).getAttribute("list"));
 		if (newestFlag) {
 		    globalListNew.add(film);
 		}
@@ -273,7 +273,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	// Create the HashMap for the row
 	ArrayList resultG=new ArrayList();
 	NodeList nodeList=doc.getElementsByTagName("category");
-	for (int i=0; i<nodeList.getLength(); ++i) {
+	for (int i=0; i < nodeList.getLength(); ++i) {
 	    HashMap m=new HashMap();
 	    m.put("Group Item", ((Element) nodeList.item(i)).getAttribute("cat"));
 	    resultG.add(m);
@@ -311,10 +311,10 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	else {
 	    list=globalList;
 	}
-	for (int i=0; i<list.size(); i++) {
+	for (int i=0; i < list.size(); i++) {
 	    List<String> film=(List<String>) list.get(i);
 	    if (film.get(0).equals(title)) {
-		String temp="http://www.youtube.com/watch?v="+film.get(1);
+		String temp="http://www.youtube.com/watch?v=" + film.get(1);
 		// if (!film.get(2).equals(""))
 		// temp += "&list=" + film.get(2) + "&feature=plpp_play_all";
 		return temp;
@@ -332,10 +332,10 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	else {
 	    list=globalList;
 	}
-	for (int i=0; i<list.size(); i++) {
+	for (int i=0; i < list.size(); i++) {
 	    List<String> film=(List<String>) list.get(i);
 	    if (film.get(0).equals(title)) {
-		if (!film.get(2).equals("")) {
+		if ( ! film.get(2).equals("")) {
 		    return film.get(2).substring(2);
 		}
 	    }
@@ -371,10 +371,10 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	else {
 	    list=globalList;
 	}
-	for (int i=0; i<list.size(); i++) {
+	for (int i=0; i < list.size(); i++) {
 	    List<String> film=(List<String>) list.get(i);
 	    if (film.get(0).equals(title)) {
-		if (!film.get(2).equals("")) {
+		if ( ! film.get(2).equals("")) {
 		    return true; // Playlist
 		}
 		else {
@@ -386,7 +386,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
     }
 
     private void loadList() {
-	progDailog=ProgressDialog.show(this, ""+getText(R.string.loadingTitle), ""+getText(R.string.loading), true);
+	progDailog=ProgressDialog.show(this, "" + getText(R.string.loadingTitle), "" + getText(R.string.loading), true);
 	progDailog.setIndeterminate(true);
 	initTask=new InitTask();
 	initTask.execute(this);
@@ -394,8 +394,8 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	if (requestCode==RESULTCODE) {
-	    if (resultCode==RESULTCODE_KO) {
+	if (requestCode == RESULTCODE) {
+	    if (resultCode == RESULTCODE_KO) {
 		Toast.makeText(getApplicationContext(), getResources().getString(R.string.playlistError),
 		    Toast.LENGTH_SHORT).show();
 	    }
@@ -447,8 +447,8 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	childPos=ExpandableListView.getPackedPositionChild(info.packedPosition);
 	String title=((HashMap) expListAdapter.getChild(groupPos, childPos)).get("Sub Item").toString();
 	title=title.replace(PLAYLIST_TAG, "");
-	String urlWiki="http://it.wikipedia.org/wiki/"+title.replace(" ", "_");
-	String urlPlaybill="http://images.google.com/search?tbm=isch&q=locandina+"+title.replace(" ", "%20");
+	String urlWiki="http://it.wikipedia.org/wiki/" + title.replace(" ", "_");
+	String urlPlaybill="http://images.google.com/search?tbm=isch&q=locandina+" + title.replace(" ", "%20");
 	//
 	switch (menuItem.getItemId()) {
 	    case R.id.cm_info:
@@ -472,17 +472,17 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		Intent emailIntent=new Intent(android.content.Intent.ACTION_SEND);
 		emailIntent.setType("plain/text");
 		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"a.s.hereb@gmail.com" });
-		emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, ""+getText(R.string.brokenSubj));
-		emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, ""+getText(R.string.brokenText)+title+" - ("
-		    +getMovieUrl(title)+")");
+		emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "" + getText(R.string.brokenSubj));
+		emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "" + getText(R.string.brokenText) + title
+		    + " - (" + getMovieUrl(title) + ")");
 		startActivity(Intent.createChooser(emailIntent, "Invia Mail"));
 		return true;
 	    case R.id.cm_share:
 		// Share movie link
 		Intent i=new Intent(android.content.Intent.ACTION_SEND);
 		i.setType("text/plain");
-		i.putExtra(Intent.EXTRA_SUBJECT, title+" "+getText(R.string.share_subj));
-		i.putExtra(Intent.EXTRA_TEXT, ""+getMovieUrl(title));
+		i.putExtra(Intent.EXTRA_SUBJECT, title + " " + getText(R.string.share_subj));
+		i.putExtra(Intent.EXTRA_TEXT, "" + getMovieUrl(title));
 		startActivity(Intent.createChooser(i, title));
 		return true;
 	    case R.id.cm_playbill:
@@ -521,7 +521,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	    childrenListNew=null;
 	    groupListNew=null;
 	}
-	if ((groupList==null)|(childrenList==null)|(groupListNew==null)|(childrenListNew==null)) {
+	if ((groupList == null) | (childrenList == null) | (groupListNew == null) | (childrenListNew == null)) {
 	    // If the movie lists need to be initialized, do it here.
 	    loadList();
 	}
@@ -539,7 +539,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		onSearchFlag=false;
 		onLatestFlag=true;
 		setButtonColors();
-		if ((groupList==null)|(childrenList==null)|(groupListNew==null)|(childrenListNew==null)) {
+		if ((groupList == null) | (childrenList == null) | (groupListNew == null) | (childrenListNew == null)) {
 		    // If the movie list need to be initialized, do it here.
 		    loadList();
 		}
@@ -555,7 +555,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		onSearchFlag=false;
 		onLatestFlag=false;
 		setButtonColors();
-		if ((groupList==null)|(childrenList==null)|(groupListNew==null)|(childrenListNew==null)) {
+		if ((groupList == null) | (childrenList == null) | (groupListNew == null) | (childrenListNew == null)) {
 		    // If the movie list need to be initialized, do it here.
 		    loadList();
 		}
@@ -582,7 +582,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	int group=ExpandableListView.getPackedPositionGroup(info.packedPosition);
 	int child=ExpandableListView.getPackedPositionChild(info.packedPosition);
 	// Only create a context menu for child items
-	if (type==ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+	if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
 	    String title=((HashMap) expListAdapter.getChild(group, child)).get("Sub Item").toString();
 	    title=title.replace(PLAYLIST_TAG, "");
 	    menu.setHeaderTitle(title);
@@ -595,10 +595,10 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	    else {
 		list=globalList;
 	    }
-	    for (int i=0; i<list.size(); i++) {
+	    for (int i=0; i < list.size(); i++) {
 		List<String> film=(List<String>) list.get(i);
 		if (film.get(0).equals(title)) {
-		    if (!film.get(2).equals("")) {
+		    if ( ! film.get(2).equals("")) {
 			inflater.inflate(R.menu.cm_menu_playlist, menu); // Playlist
 		    }
 		    else {
@@ -630,7 +630,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	    try {
 		// Load budle with lists
 		Bundle appData=getIntent().getBundleExtra(SearchManager.APP_DATA);
-		if (appData!=null) {
+		if (appData != null) {
 		    groupList=(List) appData.getSerializable(GROUPLIST_LABEL);
 		    childrenList=(List) appData.getSerializable(CHILDRENIST_LABEL);
 		    globalList=(List) appData.getSerializable(GLOBALLIST_LABEL);
@@ -643,7 +643,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	    }
 	}
 	else {
-	    if ((groupList==null)|(childrenList==null)|(groupListNew==null)|(childrenListNew==null)) {
+	    if ((groupList == null) | (childrenList == null) | (groupListNew == null) | (childrenListNew == null)) {
 		// If the movie list need to be initialized, do it here.
 		loadList();
 	    }
@@ -662,7 +662,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		AlertDialog.Builder builder=new AlertDialog.Builder(this);
 		builder.setTitle(R.string.infoTitle);
 		builder.setCancelable(true);
-		builder.setMessage(getText(R.string.infoText_1)+""+getText(R.string.disclaimer));
+		builder.setMessage(getText(R.string.infoText_1) + "" + getText(R.string.disclaimer));
 		builder.setPositiveButton(R.string.infoButtonAdFree, new DialogInterface.OnClickListener() {
 		    @Override
 		    public void onClick(DialogInterface dialog, int id) {
@@ -832,11 +832,11 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	    // If IMDB is installed on device, open movie info using the local
 	    // the app
 	    getPackageManager().getPackageInfo("com.imdb.mobile", 0);
-	    urlImdb="imdb:///find?q="+urlImdb;
+	    urlImdb="imdb:///find?q=" + urlImdb;
 	}
 	catch (Exception e) {
 	    // If IMDB app is not found, search movie info on their website
-	    urlImdb="http://www.imdb.it/find?s=tt&q="+urlImdb;
+	    urlImdb="http://www.imdb.it/find?s=tt&q=" + urlImdb;
 	}
 	Intent i=new Intent(Intent.ACTION_VIEW, Uri.parse(urlImdb));
 	startActivity(i);
@@ -882,19 +882,19 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	List findCat=new ArrayList();
 	int trovati=0;
 	boolean cat_trovata;
-	for (int i=0; i<childrenList.size(); ++i) {
+	for (int i=0; i < childrenList.size(); ++i) {
 	    cat_trovata=false;
 	    ArrayList<HashMap<String, String>> secList=new ArrayList<HashMap<String, String>>();
 	    List<HashMap<String, String>> app=(List<HashMap<String, String>>) childrenList.get(i);
 	    HashMap<String, String> child=null;
 	    // "film" nodes iteration
-	    for (int n=0; n<app.size(); n++) {
+	    for (int n=0; n < app.size(); n++) {
 		// populate childrenList
 		child=app.get(n);
 		if (child.get("Sub Item").toUpperCase().contains(dacercare)) {
 		    secList.add(child);
 		    trovati++;
-		    if (!cat_trovata) {
+		    if ( ! cat_trovata) {
 			findCat.add(groupList.get(i));
 			cat_trovata=true;
 		    }
@@ -910,7 +910,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	tot_serach=trovati;
 	// Re-buildList
 	TextView total=(TextView) findViewById(R.id.total);
-	total.setText(""+getText(R.string.search_total)+" "+trovati);
+	total.setText("" + getText(R.string.search_total) + " " + trovati);
 	try {
 	    expListAdapter=new SimpleExpandableListAdapter(this, findCat, // Creating group List.
 		R.layout.group_row, // Group item layout XML.
@@ -929,8 +929,8 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	}
 	registerForContextMenu(getExpandableListView());
 	// Expand all list groups
-	for (int i=1; i<=expListAdapter.getGroupCount(); i++) {
-	    getExpandableListView().expandGroup(i-1);
+	for (int i=1; i <= expListAdapter.getGroupCount(); i++) {
+	    getExpandableListView().expandGroup(i - 1);
 	}
 	//
 	onSearchFlag=true;
@@ -940,7 +940,8 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 
     private void searchTrailer(String title) {
 	// Searches YouTube for the movie trailer
-	String urlTrailer="http://www.youtube.com/results?search_query=trailer+"+title.replace(" ", "+")+"+italiano";
+	String urlTrailer="http://www.youtube.com/results?search_query=trailer+" + title.replace(" ", "+")
+	    + "+italiano";
 	Intent i=new Intent(Intent.ACTION_VIEW, Uri.parse(urlTrailer));
 	startActivity(i);
     }
@@ -988,7 +989,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	    updateTime.set(Calendar.MINUTE, rdmGen.nextInt(59));
 	    updateTime.set(Calendar.HOUR_OF_DAY, hour);
 	    int updateInterval=Integer.parseInt(settings.getString(PREFS_UPDATE_INTERVAL, "2"));
-	    long updIntMills=updateInterval*24*60*60*1000; // convert from days to mills
+	    long updIntMills=updateInterval * 24 * 60 * 60 * 1000; // convert from days to mills
 	    alarms.setRepeating(AlarmManager.RTC, updateTime.getTimeInMillis(), updIntMills, recurringUpdate);
 	}
     }
