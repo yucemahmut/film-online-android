@@ -125,8 +125,8 @@ public class FilmCompletiActivity extends ExpandableListActivity {
     public static final String PLAYLIST_TAG=" (Playlist)";
     public static final String NEW_LIST_URL="http://dl.dropbox.com/u/12706770/FilmGratis/new.xml";
     private static final String ONLINE_LIST_URL="http://dl.dropbox.com/u/12706770/FilmGratis/list.xml";
-    public static final String NEW_LIST_URL_BACKUP="https://www.box.com/s/ha75jef57ejff1h20ffn";
-    private static final String ONLINE_LIST_URL_BACKUP="https://www.box.com/s/oeh2a8jvcjlmob49xfy4";
+    public static final String NEW_LIST_URL_BACKUP="http://www.villenoire.net/FilmGratis/new.xml";
+    private static final String ONLINE_LIST_URL_BACKUP="http://www.villenoire.net/FilmGratis/list.xml";
     private static final String INFO_WEBSITE="http://www.facebook.com/filmonlineitaliano";
     private static final String MARKET_LINK="market://details?id=io.pen.bluepixel.filmonlinedonation";
     private static final String MARKET_LINK_CARTONI="market://details?id=bluepixel.cartonionline";
