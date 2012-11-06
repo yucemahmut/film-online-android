@@ -1,5 +1,6 @@
 package pack.filmonline;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
@@ -233,6 +234,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		List<String> film=new ArrayList<String>();
 		// populate childrenList
 		String title=((Element) filmList.item(n)).getAttribute("id");
+		title=makeProper(title);
 		// add "Playlist" tag if needed
 		if ( ! ((Element) filmList.item(n)).getAttribute("list").equals("")) {
 		    title=title + PLAYLIST_TAG;
@@ -992,5 +994,41 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	    long updIntMills=updateInterval * 24 * 60 * 60 * 1000; // convert from days to mills
 	    alarms.setRepeating(AlarmManager.RTC, updateTime.getTimeInMillis(), updIntMills, recurringUpdate);
 	}
+    }
+
+    public String makeProper(String theString) {
+	java.io.StringReader in=new java.io.StringReader(theString.toLowerCase());
+	boolean precededBySpace=true;
+	StringBuffer properCase=new StringBuffer();
+	try {
+	    while (true) {
+		int i;
+
+		i=in.read();
+
+		if (i == - 1) {
+		    break;
+		}
+		char c=(char) i;
+		if ((c == ' ') || (c == '"') || (c == '(') || (c == '.') || (c == '/') || (c == '\\') || (c == ',')) {
+		    properCase.append(c);
+		    precededBySpace=true;
+		}
+		else {
+		    if (precededBySpace) {
+			properCase.append(Character.toUpperCase(c));
+		    }
+		    else {
+			properCase.append(c);
+		    }
+		    precededBySpace=false;
+		}
+	    }
+	}
+	catch (IOException e) {
+	    return theString;
+	}
+	return properCase.toString();
+
     }
 }
