@@ -234,7 +234,6 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 		List<String> film=new ArrayList<String>();
 		// populate childrenList
 		String title=((Element) filmList.item(n)).getAttribute("id");
-		title=makeProper(title);
 		// add "Playlist" tag if needed
 		if ( ! ((Element) filmList.item(n)).getAttribute("list").equals("")) {
 		    title=title + PLAYLIST_TAG;
@@ -996,7 +995,7 @@ public class FilmCompletiActivity extends ExpandableListActivity {
 	}
     }
 
-    public String makeProper(String theString) {
+    private String makeProper(String theString) {
 	java.io.StringReader in=new java.io.StringReader(theString.toLowerCase());
 	boolean precededBySpace=true;
 	StringBuffer properCase=new StringBuffer();
