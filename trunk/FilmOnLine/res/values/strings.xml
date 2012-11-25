@@ -20,6 +20,8 @@
     <string name="disclaimer">DISCLAIMER:\nFilm OnLine raccoglie link pubblici a contenuti presenti sul web.\n\nI filmati linkati nell\'applicazione sono ospitati su server YouTube e non sono controllati dagli sviluppatori, che declinano pertanto ogni responsabilità circa il loro contenuto. L’applicazione recupera le informazioni necessarie dalle piattaforme online dei fornitori di contenuti multimediali sotto delega dell’utente e pertanto lo sostituisce nel processo fisico di accesso e richiesta informazioni a tali banche dati.\n\nPer chiedere la rimozione dall\'elenco di un link, contattare lo staff su film.online.android@gmail.com.</string>
     <string name="brokenSubj">Film OnLine: segnalazione link non funzionante</string>
     <string name="brokenText">Questo link non funziona: </string>
+    <string name="infoButtonMail">Mail</string>
+    <string name="subjectMail">Contact from Film OnLine</string>
     
     <!-- CONTEXT MENU -->
     <string name="cm_wiki">Wikipedia</string>
@@ -41,6 +43,7 @@
     <string name="opt_cartoni_text">Cartoni OnLine</string>
     <string name="opt_back">Indietro</string>
     <string name="opt_settings_text">Impostazioni</string>
+    
     
     <!-- QUIT -->
     <string name="quit_title">Esci</string>
